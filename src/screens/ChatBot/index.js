@@ -2,6 +2,8 @@ import React, { Component, Fragment} from 'react';
 import { StatusBar } from 'react-native';
 
 import { Container, HeaderWrapper, BotWrapper } from './styles';
+
+import Header from './components/Header'
 // import Bot from './components/Bot'
 // import steps from './components/steps'
 
@@ -19,7 +21,7 @@ export default class ChatBot extends Component {
         />
         <Container>
           <HeaderWrapper>
-
+            <Header/>
           </HeaderWrapper>
           <BotWrapper>
 
