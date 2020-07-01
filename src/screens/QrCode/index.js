@@ -13,11 +13,14 @@ export default function QRCode({navigation}) {
     })();
   }, []);
 
+  
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    alert(`Conectamos você ao estabelecimento ${data}.`);
+    // alert(`Conectamos você ao estabelecimento ${data}.`);
     // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
     //envio para o global o data
+    global.estabelecimento = data;
+    setScanned(false);
     navigation.navigate("Home");
   };
 
