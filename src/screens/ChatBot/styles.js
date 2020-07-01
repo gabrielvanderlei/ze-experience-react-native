@@ -7,7 +7,8 @@ export const Container = styled.View`
 `;
 
 export const HeaderWrapper = styled.View`
-  flex: 1;
+  height: 50px;
+  margin: 0;
 `;
 
 export const BotWrapper = styled.View`

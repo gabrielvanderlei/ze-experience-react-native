@@ -23,13 +23,14 @@ export default class Bot extends Component {
         steps={this.state.steps}
         hideBotAvatar={true}
         hideUserAvatar={true}
-        botDelay={100}
+        botDelay={0}
         userDelay={0}
+        botBubbleColor={ '#E8E8E8' } 
         botFontColor={ '#000' } 
-        userFontColor={ '#000' }
-        botBubbleColor={ '#f6f6f6' } 
-        userBubbleColor={ '#ffcd01' }
+        userBubbleColor={ '#FFCD01' }
+        userFontColor={ '#fff' }
         placeholder={'Digite a mensagem'}
+        contentStyle={{backgroundColor: '#fff'}}
       />
     )
   }
