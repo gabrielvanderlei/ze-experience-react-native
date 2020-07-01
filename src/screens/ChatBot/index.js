@@ -4,8 +4,7 @@ import { StatusBar } from 'react-native';
 import { Container, HeaderWrapper, BotWrapper } from './styles';
 
 import Header from './components/Header'
-// import Bot from './components/Bot'
-// import steps from './components/steps'
+import Bot from './components/Bot'
 
 export default class ChatBot extends Component {
   constructor(props){
@@ -24,7 +23,7 @@ export default class ChatBot extends Component {
             <Header/>
           </HeaderWrapper>
           <BotWrapper>
-
+            <Bot/>
           </BotWrapper>
         </Container>
       </Fragment>
