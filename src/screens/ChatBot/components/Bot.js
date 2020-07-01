@@ -12,7 +12,8 @@ export default class Bot extends Component {
           {
             userName: 'João',
             pedidos: ['Cachorro Quente', 'Litrão 200ml'],
-          }
+          },
+          props.navigation,
       ),
     }
   }

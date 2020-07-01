@@ -21,7 +21,7 @@ export default function QRCode({navigation}) {
     //envio para o global o data
     global.estabelecimento = data;
     setScanned(false);
-    navigation.navigate("Home");
+    navigation.navigate("ChatBot");
   };
 
   if (hasPermission === null) {

@@ -1,4 +1,16 @@
-export default function generateSteps(userData){
+import React from 'react';
+import {View, Button} from 'react-native';
+
+const ZeClubLink = function({navigation}){
+  return(
+    <View>
+      <Button title={"Ir para o ZéClub"} onPress={() => navigation.navigate('ZeClub')}/>
+    </View>
+  );
+}
+
+
+export default function generateSteps(userData, navigation){
     return [
       {
           id: 'start',
@@ -202,7 +214,12 @@ export default function generateSteps(userData){
       {
         id:'zeClub',
         message: 'Estou te redirecionando para o Zé Club',
-        trigger: 'home',
+        trigger: 'zeClub2',
+      },
+      {
+        id:'zeClub2',
+        component: <ZeClubLink navigation={navigation}/>,
+        trigger: 'home'
       }
     ]
   }

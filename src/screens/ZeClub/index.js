@@ -22,7 +22,7 @@ import returnHistory from './components/History';
 
 import img from '../../images/ze-icon.jpeg';
 
-export default function ZeClub() {
+export default function ZeClub({navigation}) {
 
     const [inHistory, setHistory] = useState(true);
   
@@ -42,7 +42,7 @@ export default function ZeClub() {
           />
         <TopContainer>
           <NameBar>
-            <BackButton>
+            <BackButton onPress={() => navigation.navigate('ChatBot')}>
               <Ionicons name="ios-arrow-back" size={24} color="black" />
             </BackButton>
             <Text style={{fontSize: 35}}>José</Text>

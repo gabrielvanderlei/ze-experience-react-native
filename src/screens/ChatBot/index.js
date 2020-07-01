@@ -9,6 +9,9 @@ import Bot from './components/Bot'
 export default class ChatBot extends Component {
   constructor(props){
     super(props)
+    this.state = {
+      navigation: props.navigation
+    }
   }
 
   render() {
@@ -20,10 +23,10 @@ export default class ChatBot extends Component {
         />
         <Container>
           <HeaderWrapper>
-            <Header/>
+            <Header navigation={this.state.navigation}/>
           </HeaderWrapper>
           <BotWrapper>
-            <Bot/>
+            <Bot navigation={this.state.navigation}/>
           </BotWrapper>
         </Container>
       </Fragment>
