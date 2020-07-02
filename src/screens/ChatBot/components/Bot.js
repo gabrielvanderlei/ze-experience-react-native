@@ -1,7 +1,8 @@
 import React, { Component, Fragment} from 'react';
-
+import {StyleSheet} from 'react-native';
 import SimpleChatbot from 'react-native-chatbot'
 import generateSteps from './steps';
+
 
 export default class Bot extends Component {
 
@@ -32,6 +33,7 @@ export default class Bot extends Component {
         userFontColor={ '#fff' }
         placeholder={'Digite a mensagem'}
         contentStyle={{backgroundColor: '#fff'}}
+        bubbleOptionStyle = {{color: '#FFCD01'}}
       />
     )
   }

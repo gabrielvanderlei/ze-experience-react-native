@@ -9,12 +9,28 @@ const ZeClubLink = function({navigation}){
   );
 }
 
+function verifyConection(retStep){
+  if(!global.conectado) return retStep;
+  global.saveStep = retStep;
+  return 'tellConection';
+}
 
 export default function generateSteps(userData, navigation){
+  global.valor = 0;
+  global.qtd = 0;
+  global.conectado = true;
+  global.estabelecimento = 'bar do zeca';
     return [
       {
           id: 'start',
-          message: 'Eae, aqui é o Zé! Seu garçom digital. :)\nSeja bem vindo(a) ao Zé experience!',
+          message: () => {
+            const msg = [
+              'Eae, aqui é o Zé! Seu garçom digital. 😉\n',
+              'Seja bem vindo(a) ao Zé experience!',
+              `Eae ${userData.userName}, tudo beleza? 👍`
+            ]
+            return msg[Math.floor(Math.random()*msg.length)]
+          },
           trigger: (userData.userName ? 'home' : 'form1'),
       },
       //Parte do formulário:
@@ -107,8 +123,26 @@ export default function generateSteps(userData, navigation){
       },
       {
         id:'home',
-        message: 'Eae, aqui é o Zé, o seu garçom digital! Tem algo em que eu possa te ajudar?',
-        trigger: 'home2'
+        message: 'Tem algo em que eu possa te ajudar?',
+        trigger: () => {
+            if(!global.conectado) return 'home2';
+            return 'tellConection';
+        }
+      },
+      {
+        id: 'homeFull',
+        message: 'Tem algo em que eu possa te ajudar?',
+        trigger: 'homeFull2'
+      },
+      {
+        id: 'homeFull2',
+        options: [
+          { value: '1', label: 'Me ajuda, Zé!', trigger: 'ajudaZe'},
+          { value: '2', label: 'Quero juntar a galera!', trigger: 'juntarGalera'},
+          { value: '3', label: 'Acessar o Zé Club', trigger: 'zeClub'},
+          { value: '4', label: 'Cardápio', trigger: 'shopOptions'},
+          { value: '5', label: 'Pagar Conta', trigger: 'pagarConta'}
+        ]
       },
       {
         id: 'home2',
@@ -220,6 +254,122 @@ export default function generateSteps(userData, navigation){
         id:'zeClub2',
         component: <ZeClubLink navigation={navigation}/>,
         trigger: 'home'
+      },
+      {
+        id: 'tellConection',
+        message: () => 'Opa, eu percebi que você se conectou com ' + global.estabelecimento + ' um de nossos parceiros! Que tal dar uma olhada no cardápio? Você pode realizar o pagamento via app ou pelo QRCode 😎',
+        trigger: 'optionsConection',
+      },
+      {
+        id: 'optionsConection',
+        options: [
+          {value: 1, label: 'Sim', trigger: 'goShop'},
+          {value: 2, label: 'Não', trigger: 'return'}
+        ]
+      },
+      {
+        id:'goShop',
+        message: 'Massa, então ta ai em baixo as opções, escolhe uma delas:',
+        trigger: 'shopOptions'
+      },
+      {
+        id: 'shopOptions',
+        options: [
+          {value: 1, label: 'Bebidas Alcoolicas', trigger: 'bebidasAlcoolicas'},
+          {value: 2, label: 'Sucos', trigger: 'sucos'},
+          {value: 3, label: 'Aperitivos', trigger: 'aperitivos'},
+        ]
+      },
+      {
+        id: 'bebidasAlcoolicas',
+        options: [
+          {value: '8', label: 'Skol 300ml: R$ 8,00', trigger: 'qtd'},
+          {value: '7', label: 'Brhama 300ml: R$ 7,00', trigger: 'qtd'},
+          {value: '15', label: 'Budweiser 300ml: R$ 15,00', trigger: 'qtd'},
+        ]
+      },
+      {
+        id: 'sucos',
+        options: [
+          {value: '3', label: 'Uva 300ml: R$ 3,00', trigger: 'qtd'},
+          {value: '4', label: 'Laranja 300ml: R$ 4,00', trigger: 'qtd'},
+        ]
+      },
+      {
+        id: 'aperitivos',
+        options: [
+          {value: '3', label: 'Espetinho: R$ 3,00', trigger: 'qtd'},
+        ] 
+      },
+      {
+        id: 'qtd',
+        message: ({previousValue}) => {
+          global.value = previousValue;
+          return  'Qual a quantidade?'
+        },
+        trigger: 'qtd2'
+      },
+      {
+        id:'qtd2',
+        user: true,
+        validator: (value) => {
+          if (isNaN(value)) {
+            return 'Precisa ser um número';
+          }
+          return true;
+        },
+        trigger: 'qtd3'
+      },
+      {
+        id: 'qtd3',
+        message: ({previousValue}) => {
+          // global.qtd = previousValue
+          global.qtd += parseInt(global.value) * parseInt(previousValue)
+          return 'Beleza!';
+        },
+        trigger: 'addMore',
+      },
+      {
+        id: 'addMore',
+        message: 'Você deseja adicionar mais produtos?',
+        trigger: 'addMore2',
+      },
+      {
+        id: 'addMore2',
+        options: [
+          {value: 1, label: 'Sim', trigger: 'shopOptions'},
+          {value: 2, label: 'Não', trigger: 'homeFull'}
+        ]
+      },
+      {
+        id:'pagarConta',
+        message: 'Certo!',
+        trigger: 'confirmarPagamento'
+      },
+      {
+        id: 'confirmarPagamento',
+        message:() => 'Você realmente quer fechar sua conta? O valor atual é de: R$' + global.qtd,
+        trigger:'confirmarPagamento2'
+      },
+      {
+        id: 'confirmarPagamento2',
+        options: [
+          {value: 1, label: 'Sim', trigger: 'openQR'},
+          {value: 2, label: 'Não', trigger: 'homeFull'}
+        ]
+      },
+      {
+        id: 'openQR',
+        message: () => {
+          global.qr = true;
+          return 'Agora aperte no botão de QRCode e leia com a sua camera para confirmar-mos o pagamento!'
+        },
+        trigger: 'homeFull'
+      },
+      {
+        id: 'return',
+        message: 'OK, vamos voltar para onde estávamos',
+        trigger: 'homeFull'
       }
     ]
   }
