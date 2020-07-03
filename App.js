@@ -121,8 +121,18 @@ export default class App extends Component  {
         console.log('locations:', receivedNewData)
         
         this.state.locations.forEach( e => {
-          self.arePointsNear(locations[0].coords,e, 0.200) && self.sendPushNotification(e)
-        } )
+            if(self.arePointsNear(locations[0].coords,e, 0.200)){
+              self.sendPushNotification(e);
+              global.estabelecimento = e.name;
+              if(global.estabelecimento === 'Bar do urso'){
+                global.conectado = 1;
+              }
+              else{
+                global.conectado = 2;
+              }
+            }
+          } 
+        )
 
         return receivedNewData ? BackgroundFetch.Result.NewData : BackgroundFetch.Result.NoData;
       } catch (error) {
