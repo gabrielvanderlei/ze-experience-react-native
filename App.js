@@ -61,14 +61,14 @@ export default class App extends Component  {
     return Math.sqrt(dx * dx + dy * dy) <= km;
   }
 
-  requestlocationPermission = async () => {
-    const { status } = await Location.requestPermissionsAsync();
-    if (status === 'granted') {
-      await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
-        accuracy: Location.Accuracy.Balanced,
-      });
-    }
-  };
+  // requestlocationPermission = async () => {
+  //   const { status } = await Location.requestPermissionsAsync();
+  //   if (status === 'granted') {
+  //     await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
+  //       accuracy: Location.Accuracy.Balanced,
+  //     });
+  //   }
+  // };
   
 
   registerTaskAsync = async () => {
@@ -109,9 +109,13 @@ export default class App extends Component  {
     }
   };
 
+  getPermissionStatus = async () => {
+    const { status } = await Location.getPermissionsAsync()
+    global.localON = status === 'granted'
+  }
+
   componentDidMount() {
 
-    this.requestlocationPermission()
 
     TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
       try {
@@ -119,7 +123,7 @@ export default class App extends Component  {
         const receivedNewData = locations;
         // alert(receivedNewData)
         console.log('locations:', receivedNewData)
-        
+        global.localON = true;
         this.state.locations.forEach( e => {
             if(self.arePointsNear(locations[0].coords,e, 0.200)){
               self.sendPushNotification(e);
@@ -139,6 +143,8 @@ export default class App extends Component  {
         return BackgroundFetch.Result.Failed;
       }
     });
+
+    this.getPermissionStatus();
 
     this.registerForPushNotificationsAsync();
     this.registerTaskAsync();

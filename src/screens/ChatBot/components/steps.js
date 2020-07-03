@@ -2,6 +2,9 @@ import React from 'react';
 import {View, Button, Image} from 'react-native';
 import img from '../../../images/qr.jpeg';
 
+import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions';
+
 const ZeClubLink = function({navigation}){
   return(
     <View>
@@ -25,6 +28,32 @@ function verifyConection(retStep){
 }
 global.cupom = true;
 global.conectado = 0;
+
+const LOCATION_TASK_NAME = 'background-location-task';
+
+const requestlocationPermission = async () => {
+  const { status } = await Location.requestPermissionsAsync();
+  if (status === 'granted') {
+    global.localON = true;
+    await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
+      accuracy: Location.Accuracy.Balanced,
+    });
+  }
+};
+
+const RequestLocButton = function(){
+  return(
+    <View>
+      <Button title={"Conceder localização"} onPress={requestlocationPermission}/>
+    </View>
+  );
+}
+
+const getPermissionStatus = async () => {
+  const { status } = await Location.getPermissionsAsync()
+  global.localON = status === 'granted'
+}
+
 export default function generateSteps(userData, navigation){
   global.valor = 0;
   global.qtd = 0;
@@ -45,13 +74,14 @@ export default function generateSteps(userData, navigation){
       //Parte do formulário:
       {
         id:'form1',
-        message: 'Gostaria de te conhecer melhor e assim oferecer a melhor experiencia. Beleza?',
+        message: 'Gostaria de te conhecer melhor e assim oferecer uma melhor experiência. Beleza?',
         trigger: 'form2'
       },
       {
         id:'form2',
         options: [
-          { value: 1, label: 'Simbora!', trigger:'form3',}
+          { value: 1, label: 'Simbora!', trigger:'form3'},
+          { value: 2, label: 'Talvez depois', trigger:'home'}
         ],
       },
       {
@@ -133,11 +163,28 @@ export default function generateSteps(userData, navigation){
       {
         id:'home',
         message: 'Tem algo em que eu possa te ajudar?',
-        trigger: () => {
-            if(global.conectado === 1) return 'tellConection';
-            else if(global.conectado === 2 && global.cupom === true) return 'tellConectionShop'
-            return 'home2';
+        trigger:  () => {
+            // getPermissionStatus()
+            // alert(global.localON?'TRU':'FALSU')
+            if(global.localON){
+              if(global.conectado === 1) return 'tellConection';
+              else if(global.conectado === 2 && global.cupom === true) return 'tellConectionShop'
+              return 'home2';
+            }
+            else{
+              return 'localizacao'
+            }
         }
+      },
+      {
+        id:'localizacao',
+        message: 'Gostaria de fornecer a localização para que eu possa te mandar descontos e lhe mostrar o cardápio quando estiver em um estabelecimento parceiro?',
+        trigger: 'localizaoOption'
+      },
+      {
+        id: 'localizaoOption',
+        component: <RequestLocButton/>,
+        trigger: 'home2'
       },
       {
         id: 'homeFull',
