@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, Button} from 'react-native';
+import {View, Button, Image} from 'react-native';
+import img from '../../../images/qr.jpeg';
 
 const ZeClubLink = function({navigation}){
   return(
@@ -9,17 +10,25 @@ const ZeClubLink = function({navigation}){
   );
 }
 
+const QRCode = function(){
+  return(
+    <View>
+      <Image source={img}/>
+    </View>
+  );
+}
+
 function verifyConection(retStep){
   if(!global.conectado) return retStep;
   global.saveStep = retStep;
   return 'tellConection';
 }
-
+global.cupom = true;
+global.conectado = 0;
 export default function generateSteps(userData, navigation){
   global.valor = 0;
   global.qtd = 0;
-  global.conectado = true;
-  global.estabelecimento = 'bar do zeca';
+  // global.estabelecimento = 'bar do zeca';
     return [
       {
           id: 'start',
@@ -125,8 +134,9 @@ export default function generateSteps(userData, navigation){
         id:'home',
         message: 'Tem algo em que eu possa te ajudar?',
         trigger: () => {
-            if(!global.conectado) return 'home2';
-            return 'tellConection';
+            if(global.conectado === 1) return 'tellConection';
+            else if(global.conectado === 2 && global.cupom === true) return 'tellConectionShop'
+            return 'home2';
         }
       },
       {
@@ -259,6 +269,41 @@ export default function generateSteps(userData, navigation){
         id: 'tellConection',
         message: () => 'Opa, eu percebi que você se conectou com ' + global.estabelecimento + ' um de nossos parceiros! Que tal dar uma olhada no cardápio? Você pode realizar o pagamento via app ou pelo QRCode 😎',
         trigger: 'optionsConection',
+      },
+      {
+        id: 'tellConectionShop',
+        message: () => 'Opa, localizei que você está no ' + global.estabelecimento + ', um de nossos parceiros!',
+        trigger: 'tellConectionShop2'
+      },
+      {
+        id: 'tellConectionShop2',
+        message: 'Apresente o QRCode abaixo no caixa para descontos especiais na linha de energéticos Gartorade',
+        trigger: 'tellConectionShop3'
+      },
+      {
+        id: 'tellConectionShop3',
+        component: <QRCode/>,
+        trigger: () => {
+          global.cupom = false;
+         return 'tellConectionShop4';
+        }
+      },
+      {
+        id: 'tellConectionShop4',
+        options: [
+          {value: 1, label: 'Gostei do cupom', trigger: 'obrigadoCupom'},
+          {value: 2, label: 'Obter mais cupons', trigger: 'semCupons'}
+        ]
+      },
+      {
+        id: 'semCupons',
+        message: 'Desculpe, mais no momento não temos mais cupons para você',
+        trigger: 'home'
+      },
+      {
+        id: 'obrigadoCupom',
+        message: 'Obrigado pelo seu feedback, providenciaremos mais cupons para você futuramente!',
+        trigger: 'home'
       },
       {
         id: 'optionsConection',
