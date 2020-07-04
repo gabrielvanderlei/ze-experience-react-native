@@ -45,7 +45,15 @@ app.post('/message', (req, res) => {
   ChatModel.create(data); 
   res.json({ success: true });
   console.log(`Received chat information: ${+(new Date())}`);
-})
+
+  ChatModel.search({
+    query_string: {
+      query: "test"
+    }
+  }, function(err, results) {
+    console.log(results)
+  });
+});
 
 app.listen(3000, function(){
   console.log("Server running")
