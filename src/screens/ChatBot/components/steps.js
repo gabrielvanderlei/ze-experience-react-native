@@ -102,7 +102,6 @@ export default function generateSteps(userData, navigation){
         id:'form2',
         options: [
           { value: 1, label: 'Simbora!', trigger:'form3'},
-          { value: 2, label: 'Talvez depois', trigger:'home'}
         ],
       },
       {
@@ -114,11 +113,31 @@ export default function generateSteps(userData, navigation){
         id:'form4',
         options:[
           { value: 1, label: 'Cervejas', trigger: 'cervejas'},
-          { value: 1, label: 'Sem alcool', trigger: 'cervejas'},
-          { value: 1, label: 'Vinhos', trigger: 'cervejas'},
-          { value: 1, label: 'Petiscos', trigger: 'cervejas'},
-          { value: 1, label: 'Outros', trigger: 'cervejas'},
+          { value: 2, label: 'Sem alcool', trigger: 'semAlcool'},
+          // { value: 1, label: 'Vinhos', trigger: 'cervejas'},
+          // { value: 1, label: 'Petiscos', trigger: 'cervejas'},
+          // { value: 1, label: 'Outros', trigger: 'cervejas'},
         ],
+      },
+      {
+        id: 'semAlcool',
+        message: 'Qual desses produtos você prefere?',
+        trigger: 'semAlcool2'
+      },
+      {
+        id: 'semAlcool2',
+        options: [
+          {value: 'Pepsi', label: 'Pepsi', trigger: 'semAlcool3'},
+          {value: 'redbull', label: 'Redbull', trigger: 'semAlcool3'},
+          {value: 'Gatorade', label: 'Gatorade', trigger: 'semAlcool3'},
+          {value: 'H2OH', label: 'H2OH', trigger: 'semAlcool3'},
+          {value: 'Sukita', label: 'Sukita', trigger: 'semAlcool3'},
+        ]
+      },
+      {
+        id: 'semAlcool3',
+        message: 'Boa escolha',
+        trigger: 'endForm3'
       },
       {
         id: 'cervejas',

@@ -6,11 +6,6 @@ import { Video } from 'expo-av';
 import {
   ChatBotButton,
   Highlights,
-  ProductCard,
-  ProductImage,
-  ProductTitleWrapper,
-  ProductTitle,
-  ProductPrice,
   Main
 } from './styles'
 
@@ -21,6 +16,10 @@ import img4 from '../../images/Pizza.png';
 import img5 from '../../images/Sanduiche.png';
 import zeIcon from '../../images/icon.png'
 import IMGvideo from '../../images/video.png'
+
+import products from './products'
+import ProductCard from './ProductCard'
+global.teste = 0
 
 export default function Home({ navigation }) {
   return (
@@ -55,81 +54,21 @@ export default function Home({ navigation }) {
             Destaques
           </Text>
           <Highlights>
-            <ProductCard>
-              <ProductImage source={img}/>
-              <ProductTitleWrapper>
-              <ProductTitle style={{width: '90%', height: 40}}>Combo #Sextou</ProductTitle>
-                <ProductPrice>R$ 35,99</ProductPrice>
-              </ProductTitleWrapper>
-            </ProductCard>
-            <ProductCard>
-              <ProductImage source={img2}/>
-              <ProductTitleWrapper>
-              <ProductTitle style={{width: '90%', height: 40}}>Sucos para a família</ProductTitle>
-                <ProductPrice>R$ 2,45</ProductPrice>
-              </ProductTitleWrapper>
-            </ProductCard>
-            <ProductCard>
-              <ProductImage source={img4}/>
-              <ProductTitleWrapper>
-              <ProductTitle style={{width: '90%', height: 40}}>Clone de Pizza</ProductTitle>
-                <ProductPrice>R$ 37,99</ProductPrice>
-              </ProductTitleWrapper>
-            </ProductCard>
-            <ProductCard>
-              <ProductImage source={img3}/>
-              <ProductTitleWrapper>
-              <ProductTitle style={{width: '90%', height: 40}}>Happy Hour com o time</ProductTitle>
-                <ProductPrice>R$ 25,99</ProductPrice>
-              </ProductTitleWrapper>
-            </ProductCard>
-            <ProductCard>
-              <ProductImage source={img5}/>
-              <ProductTitleWrapper>
-              <ProductTitle style={{width: '90%', height: 40}}>Happy Hour com o time</ProductTitle>
-                <ProductPrice>R$ 25,99</ProductPrice>
-              </ProductTitleWrapper>
-            </ProductCard>
+            <ProductCard product={products[2]}/>
+            <ProductCard product={products[3]}/>
+            <ProductCard product={products[4]}/>
+            <ProductCard product={products[5]}/>
+            <ProductCard product={products[6]}/>
           </Highlights>
           <Text style={{width: '100%', textAlign: 'left', fontSize: 25, marginLeft: 10, fontWeight: 'bold', marginTop: 10}}>
             Eventos
           </Text>
           <Highlights>
-            <ProductCard>
-              <ProductImage source={img}/>
-              <ProductTitleWrapper>
-              <ProductTitle style={{width: '90%', height: 40}}>Combo #Sextou</ProductTitle>
-                <ProductPrice>R$ 35,99</ProductPrice>
-              </ProductTitleWrapper>
-            </ProductCard>
-            <ProductCard>
-              <ProductImage source={img2}/>
-              <ProductTitleWrapper>
-              <ProductTitle style={{width: '90%', height: 40}}>Sucos para a família</ProductTitle>
-                <ProductPrice>R$ 2,45</ProductPrice>
-              </ProductTitleWrapper>
-            </ProductCard>
-            <ProductCard>
-              <ProductImage source={img4}/>
-              <ProductTitleWrapper>
-              <ProductTitle style={{width: '90%', height: 40}}>Clone de Pizza</ProductTitle>
-                <ProductPrice>R$ 37,99</ProductPrice>
-              </ProductTitleWrapper>
-            </ProductCard>
-            <ProductCard>
-              <ProductImage source={img3}/>
-              <ProductTitleWrapper>
-              <ProductTitle style={{width: '90%', height: 40}}>Happy Hour com o time</ProductTitle>
-                <ProductPrice>R$ 25,99</ProductPrice>
-              </ProductTitleWrapper>
-            </ProductCard>
-            <ProductCard>
-              <ProductImage source={img5}/>
-              <ProductTitleWrapper>
-              <ProductTitle style={{width: '90%', height: 40}}>Happy Hour com o time</ProductTitle>
-                <ProductPrice>R$ 25,99</ProductPrice>
-              </ProductTitleWrapper>
-            </ProductCard>
+            <ProductCard product={products[2]}/>
+            <ProductCard product={products[3]}/>
+            <ProductCard product={products[4]}/>
+            <ProductCard product={products[5]}/>
+            <ProductCard product={products[6]}/>
           </Highlights>
 
       </View>

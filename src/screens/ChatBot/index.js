@@ -12,6 +12,7 @@ export default class ChatBot extends Component {
     this.state = {
       navigation: props.navigation
     }
+    global.teste = 1;
   }
 
   render() {
