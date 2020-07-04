@@ -16,7 +16,12 @@ var chatSchema = new mongoose.Schema({
   clientId: String,
 }, { timestamps: true });
 
-chatSchema.plugin(mongoosastic)
+chatSchema.plugin(mongoosastic, {
+  hosts: [
+    'localhost:9200'
+  ]
+});
+
 var ChatModel = mongoose.model('Chat', chatSchema);
 
 const connectOptions = {
