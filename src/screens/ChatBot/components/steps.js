@@ -1,9 +1,12 @@
 import React from 'react';
-import {View, Button, Image} from 'react-native';
+import {View, Button, Image, Text} from 'react-native';
 import img from '../../../images/qr.jpeg';
 
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
+
+import prestigiadas from '../../../images/prestigiadas.png';
+import consagradas from '../../../images/consagradas.png';
 
 const ZeClubLink = function({navigation}){
   return(
@@ -18,6 +21,24 @@ const QRCode = function(){
     <View>
       <Image source={img}/>
     </View>
+  );
+}
+
+const Prestigiadas = function(){
+  return(
+        <View>
+          <Text style={{width:'100%', textAlign: 'center', marginBottom: 10, fontSize: 20, fontWeight: 'bold'}}> As Prestigiadas </Text>
+          <Image source = {prestigiadas} style={{height: 200, width: 300}}/>
+        </View>
+  );
+}
+
+const Consagradas = function(){
+  return(
+        <View>
+          <Text style={{width:'100%', textAlign: 'center', marginBottom: 10, fontSize: 20, fontWeight: 'bold'}}> As Consagradas </Text>
+          <Image source = {consagradas} style={{height: 200, width: 300}}/>
+        </View>
   );
 }
 
@@ -63,7 +84,7 @@ export default function generateSteps(userData, navigation){
           id: 'start',
           message: () => {
             const msg = [
-              'Eae, aqui é o Zé! Seu garçom digital. 😉\n',
+              'Eae, aqui é o Zé! Seu garçom digital. 😉',
               'Seja bem vindo(a) ao Zé experience!',
               `Eae ${userData.userName}, tudo beleza? 👍`
             ]
@@ -93,10 +114,10 @@ export default function generateSteps(userData, navigation){
         id:'form4',
         options:[
           { value: 1, label: 'Cervejas', trigger: 'cervejas'},
-          // { value: 1, label: 'Sem alcool', trigger: 'cervejas'},
-          // { value: 1, label: 'Vinhos', trigger: 'cervejas'},
-          // { value: 1, label: 'Petiscos', trigger: 'cervejas'},
-          // { value: 1, label: 'Outros', trigger: 'cervejas'},
+          { value: 1, label: 'Sem alcool', trigger: 'cervejas'},
+          { value: 1, label: 'Vinhos', trigger: 'cervejas'},
+          { value: 1, label: 'Petiscos', trigger: 'cervejas'},
+          { value: 1, label: 'Outros', trigger: 'cervejas'},
         ],
       },
       {
@@ -107,13 +128,15 @@ export default function generateSteps(userData, navigation){
       {
         id: 'cervejas2',
         //um custom mostrando as imagens e falando o texto abaixo:
-        message: 'As consagradas',
+        // message: 'As consagradas',
+        component: <Consagradas/>,
         trigger: 'cervejas3',
       },
       {
         id: 'cervejas3',
         //um custom mostrando as imagens e falando o texto abaixo:
-        message: 'As prestigiadas',
+        // message: 'As prestigiadas',
+        component: <Prestigiadas/>,
         trigger: 'cervejas4',
       },
       {
@@ -137,16 +160,18 @@ export default function generateSteps(userData, navigation){
         id: 'escolhaConsagrada',
         options: [
           { value: 1, label: 'Skol', trigger: 'endForm'},
-          // { value: 1, label: 'Skol', trigger: 'boa'},
-          // { value: 1, label: 'Skol', trigger: 'boa'},
+          { value: 2, label: 'Brahma', trigger: 'endForm'},
+          { value: 3, label: 'Budweiser', trigger: 'endForm'},
+          { value: 4, label: 'Antartica', trigger: 'endForm'},
         ]
       },
       {
         id: 'escolhaPrestigiada',
         options: [
-          { value: 1, label: 'Skol', trigger: 'endForm'},
-          // { value: 1, label: 'Skol', trigger: 'boa'},
-          // { value: 1, label: 'Skol', trigger: 'boa'},
+          { value: 1, label: 'Stella Artois', trigger: 'endForm'},
+          { value: 1, label: 'Beck\'s', trigger: 'endForm'},
+          { value: 1, label: 'Corona', trigger: 'endForm'},
+          { value: 1, label: 'Bohemia', trigger: 'endForm'},
         ]
       },
       {
