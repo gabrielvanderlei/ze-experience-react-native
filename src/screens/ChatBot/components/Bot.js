@@ -21,6 +21,7 @@ export default class Bot extends Component {
             pedidos: ['Cachorro Quente', 'Litrão 200ml'],
           },
           props.navigation,
+          props.setDestaques
       ),
     }
   }
@@ -42,6 +43,8 @@ export default class Bot extends Component {
 
         optionBubbleColor={'#FFCD01'}
         optionFontColor={ '#000' }
+
+        customDelay={100}
         
         placeholder={'Digite a mensagem'}
         contentStyle={{backgroundColor: '#fff'}}

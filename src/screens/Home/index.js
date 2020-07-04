@@ -6,11 +6,6 @@ import { Video } from 'expo-av';
 import {
   ChatBotButton,
   Highlights,
-  ProductCard,
-  ProductImage,
-  ProductTitleWrapper,
-  ProductTitle,
-  ProductPrice,
   Main
 } from './styles'
 
@@ -22,121 +17,124 @@ import img5 from '../../images/Sanduiche.png';
 import zeIcon from '../../images/icon.png'
 import IMGvideo from '../../images/video.png'
 
-export default function Home({ navigation }) {
-  return (
-    <>
-    <Main>
-      <StatusBar
-        barStyle="light-content"
-        backgroundColor="#FFCD01"
-      />
-      <View>
-        <View style={{height: 300, backgroundColor: '#FFCD01'}}>
-          <Text style={{width: '100%', fontSize: 40, color: '#FFF', textAlign: 'center', marginTop: 5, fontWeight: 'bold'}}>
-            Experience
-          </Text>
-          <View style={{height: 170, width: '100%', marginTop: 20, alignItems: 'center'}}>
-          {/* <Video
-              source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
-              rate={1.0}
-              volume={1.0}
-              isMuted={true}
-              resizeMode={'contain'}
-              shouldPlay={true}
-              useNativeControls
-              isLooping
-            /> */}
-            <Image source={IMGvideo}/>
+import carvalheira from '../../images/carvalheira.jpg'
+import stb from '../../images/stb-festival.jpg'
+import beats from '../../images/skol_beats_senses.png'
+import fusion from '../../images/fusion-event.jpeg'
+
+import products from './products'
+import ProductCard from './ProductCard'
+import EventCard from './EventCard'
+global.teste = 0
+
+export default class Home extends React.Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      navigation: props.navigation,
+      // destaques: props.route.params.destaques
+      destaques: [0,10,4,8,11]
+    }
+
+    this.setDestaques = this.setDestaques.bind(this)
+
+  }
+
+  setDestaques(arr){
+    this.setState({
+      destaques: arr
+    })
+  }
+
+  componentDidUpdate(){
+    
+  }
+
+  render(){
+    const arr = this.state.destaques
+    return (
+      <>
+      <Main>
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor="#FFCD01"
+        />
+        <View>
+          <View style={{height: 300, backgroundColor: '#FFCD01'}}>
+            <Text style={{
+              width: '100%',
+              fontSize: 40,
+              color: '#FFF',
+              textAlign: 'center',
+              marginTop: 5,
+              fontWeight: 'bold',
+              textShadowColor: "#000",
+              textShadowOffset: {
+                width: 1,
+                height: 3,
+              },
+              textShadowOpacity: 0.23,
+              textShadowRadius: 4.62,
+              elevation: 3,
+            }}>
+              João Silva
+            </Text>
+            
+            <View style={{height: 170, width: '100%', marginTop: 20, alignItems: 'center'}}>
+            {/* <Video
+                source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
+                rate={1.0}
+                volume={1.0}
+                isMuted={true}
+                resizeMode={'contain'}
+                shouldPlay={true}
+                useNativeControls
+                isLooping
+              /> */}
+              <Image source={IMGvideo}/>
+            </View>
           </View>
+
+
+            <Text style={{width: '100%', textAlign: 'left', fontSize: 25, marginLeft: 10, fontWeight: 'bold', marginTop: 10}}>
+              Destaques
+            </Text>
+            <Highlights>
+            {arr.map((e) => {return <ProductCard product={products[e]}/>} )}
+            </Highlights>
+            <Text style={{width: '100%', textAlign: 'left', fontSize: 25, marginLeft: 10, fontWeight: 'bold', marginTop: 10}}>
+              Eventos
+            </Text>
+            <Highlights>
+              <EventCard event={{
+                img: carvalheira,
+                name:'Carvalheira na Ladeira',
+                local:'Recife - PE'
+              }}/>
+              {/* <EventCard event={{
+                img: stb,
+                name:'Só Track Boa',
+                local:'Recife - PE'
+              }}/> */}
+              <EventCard event={{
+                img: beats,
+                name:'Skol Beats Sense',
+                local:'Olinda - PE'
+              }}/>
+              <EventCard event={{
+                img: fusion,
+                name:'Fusion New Rivals',
+                local:'Acompanhe Online'
+              }}/>
+            </Highlights>
+
         </View>
-
-
-          <Text style={{width: '100%', textAlign: 'left', fontSize: 25, marginLeft: 10, fontWeight: 'bold', marginTop: 10}}>
-            Destaques
-          </Text>
-          <Highlights>
-            <ProductCard>
-              <ProductImage source={img}/>
-              <ProductTitleWrapper>
-              <ProductTitle style={{width: '90%', height: 40}}>Combo #Sextou</ProductTitle>
-                <ProductPrice>R$ 35,99</ProductPrice>
-              </ProductTitleWrapper>
-            </ProductCard>
-            <ProductCard>
-              <ProductImage source={img2}/>
-              <ProductTitleWrapper>
-              <ProductTitle style={{width: '90%', height: 40}}>Sucos para a família</ProductTitle>
-                <ProductPrice>R$ 2,45</ProductPrice>
-              </ProductTitleWrapper>
-            </ProductCard>
-            <ProductCard>
-              <ProductImage source={img4}/>
-              <ProductTitleWrapper>
-              <ProductTitle style={{width: '90%', height: 40}}>Clone de Pizza</ProductTitle>
-                <ProductPrice>R$ 37,99</ProductPrice>
-              </ProductTitleWrapper>
-            </ProductCard>
-            <ProductCard>
-              <ProductImage source={img3}/>
-              <ProductTitleWrapper>
-              <ProductTitle style={{width: '90%', height: 40}}>Happy Hour com o time</ProductTitle>
-                <ProductPrice>R$ 25,99</ProductPrice>
-              </ProductTitleWrapper>
-            </ProductCard>
-            <ProductCard>
-              <ProductImage source={img5}/>
-              <ProductTitleWrapper>
-              <ProductTitle style={{width: '90%', height: 40}}>Happy Hour com o time</ProductTitle>
-                <ProductPrice>R$ 25,99</ProductPrice>
-              </ProductTitleWrapper>
-            </ProductCard>
-          </Highlights>
-          <Text style={{width: '100%', textAlign: 'left', fontSize: 25, marginLeft: 10, fontWeight: 'bold', marginTop: 10}}>
-            Eventos
-          </Text>
-          <Highlights>
-            <ProductCard>
-              <ProductImage source={img}/>
-              <ProductTitleWrapper>
-              <ProductTitle style={{width: '90%', height: 40}}>Combo #Sextou</ProductTitle>
-                <ProductPrice>R$ 35,99</ProductPrice>
-              </ProductTitleWrapper>
-            </ProductCard>
-            <ProductCard>
-              <ProductImage source={img2}/>
-              <ProductTitleWrapper>
-              <ProductTitle style={{width: '90%', height: 40}}>Sucos para a família</ProductTitle>
-                <ProductPrice>R$ 2,45</ProductPrice>
-              </ProductTitleWrapper>
-            </ProductCard>
-            <ProductCard>
-              <ProductImage source={img4}/>
-              <ProductTitleWrapper>
-              <ProductTitle style={{width: '90%', height: 40}}>Clone de Pizza</ProductTitle>
-                <ProductPrice>R$ 37,99</ProductPrice>
-              </ProductTitleWrapper>
-            </ProductCard>
-            <ProductCard>
-              <ProductImage source={img3}/>
-              <ProductTitleWrapper>
-              <ProductTitle style={{width: '90%', height: 40}}>Happy Hour com o time</ProductTitle>
-                <ProductPrice>R$ 25,99</ProductPrice>
-              </ProductTitleWrapper>
-            </ProductCard>
-            <ProductCard>
-              <ProductImage source={img5}/>
-              <ProductTitleWrapper>
-              <ProductTitle style={{width: '90%', height: 40}}>Happy Hour com o time</ProductTitle>
-                <ProductPrice>R$ 25,99</ProductPrice>
-              </ProductTitleWrapper>
-            </ProductCard>
-          </Highlights>
-
-      </View>
-    </Main>
-      <ChatBotButton onPress={() => navigation.navigate('ChatBot')}>
-          <Image source={zeIcon} style={{height: 60, width: 60}}/>
-      </ChatBotButton>
-      </>
-  )
+      </Main>
+        <ChatBotButton onPress={() => this.state.navigation.navigate('ChatBot',{setDestaques: this.setDestaques})}>
+            <Image source={zeIcon} style={{height: 60, width: 60}}/>
+        </ChatBotButton>
+        </>
+    )
+  }
 }

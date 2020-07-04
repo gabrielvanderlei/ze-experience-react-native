@@ -10,8 +10,15 @@ export default class ChatBot extends Component {
   constructor(props){
     super(props)
     this.state = {
-      navigation: props.navigation
+      navigation: props.navigation,
+      // setDestaques: props.route.params.setDestaques
     }
+    global.teste = 1;
+    this.setDestaques = this.setDestaques.bind(this)
+  }
+
+  setDestaques(arr) {
+    this.props.route.params.setDestaques(arr)
   }
 
   render() {
@@ -26,7 +33,7 @@ export default class ChatBot extends Component {
             <Header navigation={this.state.navigation}/>
           </HeaderWrapper>
           <BotWrapper>
-            <Bot navigation={this.state.navigation}/>
+            <Bot navigation={this.state.navigation} setDestaques={this.setDestaques}/>
           </BotWrapper>
         </Container>
       </Fragment>

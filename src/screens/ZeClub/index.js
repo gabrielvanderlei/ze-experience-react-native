@@ -20,7 +20,7 @@ import {
 import returnAchievements from './components/Achievement';
 import returnHistory from './components/History';
 
-import img from '../../images/ze-icon.jpeg';
+import img from '../../images/gustavo-lampert-EUyZE1V99g8-unsplash.jpg';
 
 export default function ZeClub({navigation}) {
 
@@ -45,7 +45,7 @@ export default function ZeClub({navigation}) {
             <BackButton onPress={() => navigation.navigate('ChatBot')}>
               <Ionicons name="ios-arrow-back" size={24} color="black" />
             </BackButton>
-            <Text style={{fontSize: 35}}>Matheus</Text>
+            <Text style={{fontSize: 35}}>João Silva</Text>
             <HelpContainer/>
           </NameBar>
           <Image source={img} />

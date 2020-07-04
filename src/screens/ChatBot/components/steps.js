@@ -26,7 +26,7 @@ const QRCode = function(){
 
 const Prestigiadas = function(){
   return(
-        <View>
+        <View style={{textAlign:'center', justifyContent:'center', alignItems: 'center'}}>
           <Text style={{width:'100%', textAlign: 'center', marginBottom: 10, fontSize: 20, fontWeight: 'bold'}}> As Prestigiadas </Text>
           <Image source = {prestigiadas} style={{height: 200, width: 300}}/>
         </View>
@@ -35,7 +35,7 @@ const Prestigiadas = function(){
 
 const Consagradas = function(){
   return(
-        <View>
+        <View style={{textAlign:'center', justifyContent:'center', alignItems: 'center'}}>
           <Text style={{width:'100%', textAlign: 'center', marginBottom: 10, fontSize: 20, fontWeight: 'bold'}}> As Consagradas </Text>
           <Image source = {consagradas} style={{height: 200, width: 300}}/>
         </View>
@@ -75,7 +75,7 @@ const getPermissionStatus = async () => {
   global.localON = status === 'granted'
 }
 
-export default function generateSteps(userData, navigation){
+export default function generateSteps(userData, navigation, setDestaques){
   global.valor = 0;
   global.qtd = 0;
   // global.estabelecimento = 'bar do zeca';
@@ -102,7 +102,6 @@ export default function generateSteps(userData, navigation){
         id:'form2',
         options: [
           { value: 1, label: 'Simbora!', trigger:'form3'},
-          { value: 2, label: 'Talvez depois', trigger:'home'}
         ],
       },
       {
@@ -114,11 +113,34 @@ export default function generateSteps(userData, navigation){
         id:'form4',
         options:[
           { value: 1, label: 'Cervejas', trigger: 'cervejas'},
-          { value: 1, label: 'Sem alcool', trigger: 'cervejas'},
-          { value: 1, label: 'Vinhos', trigger: 'cervejas'},
-          { value: 1, label: 'Petiscos', trigger: 'cervejas'},
-          { value: 1, label: 'Outros', trigger: 'cervejas'},
+          { value: 2, label: 'Sem alcool', trigger: 'semAlcool'},
+          // { value: 1, label: 'Vinhos', trigger: 'cervejas'},
+          // { value: 1, label: 'Petiscos', trigger: 'cervejas'},
+          // { value: 1, label: 'Outros', trigger: 'cervejas'},
         ],
+      },
+      {
+        id: 'semAlcool',
+        message: () => {
+          setDestaques([8,9,10,11])
+          return 'Qual desses produtos você prefere?'
+        },
+        trigger: 'semAlcool2'
+      },
+      {
+        id: 'semAlcool2',
+        options: [
+          {value: 'Pepsi', label: 'Pepsi', trigger: 'semAlcool3'},
+          {value: 'redbull', label: 'Redbull', trigger: 'semAlcool3'},
+          {value: 'Gatorade', label: 'Gatorade', trigger: 'semAlcool3'},
+          {value: 'H2OH', label: 'H2OH', trigger: 'semAlcool3'},
+          {value: 'Sukita', label: 'Sukita', trigger: 'semAlcool3'},
+        ]
+      },
+      {
+        id: 'semAlcool3',
+        message: 'Boa escolha',
+        trigger: 'endForm3'
       },
       {
         id: 'cervejas',
@@ -148,12 +170,18 @@ export default function generateSteps(userData, navigation){
       },
       {
         id: 'consagradas',
-        message: `Boa ${userData.userName} você é como eu, não abre mão de uma boa consagrada`,
+        message: () => {
+          setDestaques([0,1,2,3])
+          return `Boa ${userData.userName} você é como eu, não abre mão de uma boa consagrada`
+        },
         trigger: 'escolhaConsagrada'
       },
       {
         id: 'prestigiadas',
-        message: `Boa ${userData.userName} você é como eu, não abre mão de uma boa prestigiada`,
+        message: () => {
+          setDestaques([4,5,6,7])
+          return `Boa ${userData.userName} você é como eu, não abre mão de uma boa prestigiada`
+        },
         trigger: 'escolhaPrestigiada'
       },
       {
@@ -169,9 +197,9 @@ export default function generateSteps(userData, navigation){
         id: 'escolhaPrestigiada',
         options: [
           { value: 1, label: 'Stella Artois', trigger: 'endForm'},
-          { value: 1, label: 'Beck\'s', trigger: 'endForm'},
-          { value: 1, label: 'Corona', trigger: 'endForm'},
-          { value: 1, label: 'Bohemia', trigger: 'endForm'},
+          { value: 2, label: 'Beck\'s', trigger: 'endForm'},
+          { value: 3, label: 'Corona', trigger: 'endForm'},
+          { value: 4, label: 'Bohemia', trigger: 'endForm'},
         ]
       },
       {
@@ -322,7 +350,7 @@ export default function generateSteps(userData, navigation){
       },
       {
         id: 'outroProblema',
-        message: 'Possuo diversos companheiros de equipe que estão sempre dispostos a te ajuda em qualquer problema que houver. Por favor, descreva o seu problema que um de nossos atendentes o atenderá!',
+        message: 'Meus parças estão sempre dispostos a te ajudar em qualquer problema que houver. Por favor, descreva o seu problema que um de nossos atendentes o atenderá!',
         trigger: 'outroProblema2',
       },
       {
@@ -394,12 +422,12 @@ export default function generateSteps(userData, navigation){
       },
       {
         id: 'semCupons',
-        message: 'Desculpe, mais no momento não temos mais cupons para você',
+        message: 'Cara, acabou. Me segue lá no Twitter @ZeDelivery, quem sabe você acha alguns rsrs',
         trigger: 'home'
       },
       {
         id: 'obrigadoCupom',
-        message: 'Obrigado pelo seu feedback, providenciaremos mais cupons para você futuramente!',
+        message: 'Com o Zé seu amigão, é cupom na mão! 🖐️',
         trigger: 'home'
       },
       {
