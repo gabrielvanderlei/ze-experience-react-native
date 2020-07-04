@@ -19,8 +19,8 @@ var chatSchema = new mongoose.Schema({
   clientId: String,
 }, { timestamps: true });
 
-var ChatModel = mongoose.model('Chat', chatSchema);
 chatSchema.plugin(mongoosastic)
+var ChatModel = mongoose.model('Chat', chatSchema);
 
 app.get('/', (req, res) => {
   res.json({  message: "Server running." });
