@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 
 export const Wrapper = styled.ScrollView`
-  background: #DEE;
+  background: #EEE;
   flex: 1;
   display: flex;
 `;
@@ -51,7 +51,7 @@ export const Image = styled.Image`
 `
 
 export const BodyContainer = styled.View`
-  background-color: #DEE;
+  background-color: #EEE;
 `
 
 export const ToggleView = styled.View`

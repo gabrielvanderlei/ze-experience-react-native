@@ -27,7 +27,6 @@ export const MostRecentItem = styled.View`
     width: 290px;
     height: 100%;
     margin-right: 10px;
-    background-color: red;
 `
 
 export const MostRecentItemIMG = styled.Image`
@@ -55,7 +54,22 @@ export const TrophiesItem = styled.View`
     width: 85px;
     margin: 15px 10px;
     height: 85px;
-    background-color: black;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content:center;
+    align-content: center;
+    borderWidth: 0.5px;
+    borderRadius: 8px;
+    borderColor: gray;
+`
+
+export const TrophiesItemContainerIntern = styled.View`
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
 
 export const BrandContainer = styled.View`
@@ -74,9 +88,10 @@ export const BrandItemContainer = styled.View`
     flex-wrap: wrap;
 `
 
-export const BrandItem = styled.View`
+export const BrandItem = styled.Image`
     width: 85px;
     margin: 15px 10px;
     height: 85px;
     background-color: pink;
+    borderRadius: 10px;
 `

@@ -9,10 +9,15 @@ import {
     HistoryLevelLeftImg,
     HistoryLevelLeftText,
     HistoryLevelLeftTextTittle,
-    HistoryLevelLeftTextDesc
+    HistoryLevelLeftTextDesc,
+    HistoryItemContainer,
+    HistoryItemLeftArea,
+    HistoryItemRightArea,
+    HistoryItemTittle,
+    HistoryItemDesc
 } from './styles';
 
-import img2 from '../../../../images/ze-icon2.png';
+import img2 from '../../../../images/urso.jpeg';
 
 export default function returnHistory(){
   
@@ -35,6 +40,36 @@ export default function returnHistory(){
               </HistoryLevelLeftText>
             </HistoryLevelLeft>
           </HistoryLevelContainer>
+          <HistoryItemContainer>
+            <HistoryItemLeftArea/>
+            <HistoryItemRightArea>
+              <HistoryItemTittle>
+                <Text style={{fontSize: 25}}>
+                  09 de Abril de 2020
+                </Text>
+              </HistoryItemTittle>
+              <HistoryItemDesc>
+                <Text style={{color: 'gray'}}>
+                  Bebidas e petiscos no Bar do Urso
+                </Text>
+              </HistoryItemDesc>
+            </HistoryItemRightArea>
+          </HistoryItemContainer>
+          <HistoryItemContainer>
+            <HistoryItemLeftArea/>
+            <HistoryItemRightArea>
+              <HistoryItemTittle>
+                <Text style={{fontSize: 25}}>
+                  21 de Março de 2020
+                </Text>
+              </HistoryItemTittle>
+              <HistoryItemDesc>
+                <Text style={{color: 'gray'}}>
+                  Energéticos no Pão de Açucar
+                </Text>
+              </HistoryItemDesc>
+            </HistoryItemRightArea>
+          </HistoryItemContainer>
         </History>
     );
   }
