@@ -45,7 +45,7 @@ export default function ZeClub({navigation}) {
             <BackButton onPress={() => navigation.navigate('ChatBot')}>
               <Ionicons name="ios-arrow-back" size={24} color="black" />
             </BackButton>
-            <Text style={{fontSize: 35}}>José</Text>
+            <Text style={{fontSize: 35}}>Matheus</Text>
             <HelpContainer/>
           </NameBar>
           <Image source={img} />
