@@ -48,25 +48,11 @@ export default class App extends Component  {
           longitude: -34.914110
         }
       ],
-      destaques: [0,4,7,10], 
-      // categoria: {
-      //   'padrao': [0,4,7,10],
-      //   'consagradas': [0,4,7,10],
-      //   'pretigiadas': [0,4,7,10],
-      //   'semAlcool': [0,4,7,10],
-      // }
     };
 
     self = this;
     
-    this.setDestaques = this.setDestaques.bind(this)
-
   }
-    setDestaques(arr){
-      this.setState({
-        destaques: arr
-      })
-    }
   
   arePointsNear(checkPoint, centerPoint, km) {
     console.log('checkPoint:',checkPoint)
@@ -107,14 +93,14 @@ export default class App extends Component  {
         finalStatus = status;
       }
       if (finalStatus !== 'granted') {
-        alert('Failed to get push token for push notification!');
+        // alert('Failed to get push token for push notification!');
         return;
       }
       token = await Notifications.getExpoPushTokenAsync();
       console.log(token);
       this.setState({ expoPushToken: token });
     } else {
-      alert('Must use physical device for Push Notifications');
+      // alert('Must use physical device for Push Notifications');
     }
 
     if (Platform.OS === 'android') {
@@ -209,7 +195,7 @@ export default class App extends Component  {
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Home" headerMode="none">
             <Stack.Screen name="Home" component={Home} initialParams={{ destaques: this.state.destaques }}/>
-            <Stack.Screen name="ChatBot" component={ChatBot} initialParams={{ setDestaques: this.setDestaques }}/>
+            <Stack.Screen name="ChatBot" component={ChatBot} />
             <Stack.Screen name="ZeClub" component={ZeClub} />
             <Stack.Screen name="QrCode" component={QrCode}/>
           </Stack.Navigator>

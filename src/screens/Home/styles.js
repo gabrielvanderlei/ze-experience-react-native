@@ -24,7 +24,8 @@ export const Highlights = styled.ScrollView.attrs(() => ({
     paddingLeft: 10,
   },
 }))`
-  height: 240px;
+  height: 280px;
+  margin-left: 15px;
 `
 
 export const ChatBotButton = styled.TouchableOpacity`

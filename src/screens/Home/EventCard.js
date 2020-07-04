@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import products from './products';
 
 const Container = styled.TouchableOpacity`
   display: flex;
@@ -8,38 +9,35 @@ const Container = styled.TouchableOpacity`
   background-color: #fff;
   border-radius: 10px;
   margin-right :10px;
+  width: 300px;
+  height: 270px;
 `;
 //box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.5);
-const ProductImage = styled.Image`
-  width: 110px;
-  height: 158px;
+const EventImage = styled.Image`
+  height: 80%;
+  width: 95%;
+  border-radius: 10px;
 `;
 
-const ProductTitleWrapper = styled.View`
+const EventTitleWrapper = styled.View`
   width: 100%
 `;
 
-const ProductTitle = styled.Text`
+const EventTitle = styled.Text`
   color: #000;
   font-size: 15px;
   text-align: center;
   justify-content: center;
   align-items: center;
 `;
-const ProductPrice = styled.Text`
-  color: #000;
-  text-align: center;
-  font-size: 16px;
-  font-weight: bold;
-`;
-const ProductOriginalPrice = styled.Text`
+
+const EventLocal= styled.Text`
   color: #999;
   text-align: center;
   font-size: 13px;
-  text-decoration: line-through;
 `;
 
-export default function ProductCard({product}){
+export default function EventCard({event}){
   return(
     <Container 
     style={{
@@ -54,16 +52,13 @@ export default function ProductCard({product}){
       paddingLeft: 10,
       paddingRight: 10,
       paddingTop: 15,
-      width: 170,
-      height: 270
     }}
     >
-      <ProductImage source={product.img}/>
-      <ProductTitleWrapper>
-      <ProductTitle style={{width: '90%', height: 40}}>{product.name}</ProductTitle>
-        <ProductOriginalPrice>{product.promo}</ProductOriginalPrice>
-        <ProductPrice>{product.price}</ProductPrice>
-      </ProductTitleWrapper>
+      <EventImage source={event.img}/>
+      <EventTitleWrapper style={{alignItems: 'center', marginTop: 7}}>
+        <EventTitle style={{width: '90%', height: 20}}>{event.name}</EventTitle>
+        <EventLocal>{event.local}</EventLocal>
+      </EventTitleWrapper>
     </Container>
   )
 }
