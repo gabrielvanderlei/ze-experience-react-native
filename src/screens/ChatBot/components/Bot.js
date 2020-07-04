@@ -2,7 +2,13 @@ import React, { Component, Fragment} from 'react';
 import {StyleSheet} from 'react-native';
 import SimpleChatbot from 'react-native-chatbot'
 import generateSteps from './steps';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+function SendButton(){
+  return (
+    <MaterialCommunityIcons name="send-circle" size={50} color="#FFCD01" />
+  )
+}
 
 export default class Bot extends Component {
 
@@ -25,15 +31,24 @@ export default class Bot extends Component {
         steps={this.state.steps}
         hideBotAvatar={true}
         hideUserAvatar={true}
-        botDelay={0}
+        botDelay={350}
         userDelay={0}
+
         botBubbleColor={ '#E8E8E8' } 
         botFontColor={ '#000' } 
+
         userBubbleColor={ '#FFCD01' }
-        userFontColor={ '#fff' }
+        userFontColor={ '#000' }
+
+        optionBubbleColor={'#FFCD01'}
+        optionFontColor={ '#000' }
+        
         placeholder={'Digite a mensagem'}
         contentStyle={{backgroundColor: '#fff'}}
-        bubbleOptionStyle = {{color: '#FFCD01'}}
+        // submitButtonContent={'Enviar'}
+        submitButtonContent={<SendButton/>}
+        submitButtonStyle={{backgroundColor: '#fff'}}
+        inputStyle={{borderRadius:50}}
       />
     )
   }

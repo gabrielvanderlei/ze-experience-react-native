@@ -1,3 +1,5 @@
+console.disableYellowBox = true;
+
 import React, {Component} from 'react';
 import { Vibration} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';

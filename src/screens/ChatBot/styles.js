@@ -13,5 +13,6 @@ export const HeaderWrapper = styled.View`
 
 export const BotWrapper = styled.View`
   flex: 10;
-  background-color: #f00;
+  background-color: #fff;
+  padding-top: 5px;
 `;

@@ -69,7 +69,7 @@ export default function generateSteps(userData, navigation){
             ]
             return msg[Math.floor(Math.random()*msg.length)]
           },
-          trigger: (userData.userName ? 'home' : 'form1'),
+          trigger: (global.endform ? 'home' : 'form1'),
       },
       //Parte do formulário:
       {
@@ -152,8 +152,31 @@ export default function generateSteps(userData, navigation){
       {
         id:'endForm',
         //aqui é pra ter uma div com o produto que o usuário escolheu
-        message: 'Ta ai meu bom, teu produto',
-        trigger: 'homeForm'
+        message: 'Você tem bom gosto.',
+        trigger: 'endForm3'
+      },
+      // {
+      //   id:'endForm2',
+      //   message: 'Você deve estar se perguntando porque é tão importante te conhecer melhor.',
+      //   trigger: 'endForm3'
+      // },
+      {
+        id:'endForm3',
+        message: 'Sabendo os seus gostos eu poderei te ajudar nas próximas compras, recomendações, atalhos nas conversas comigo. Usarei estes dados a seu favor! 😀 Você pode saber melhor sobre nossa política de privacidade em ze.experience/privacy',
+        trigger: 'endForm4'
+      },
+      {
+        id:'endForm4',
+        message: ' Pode ficar tranquilo, seus dados estão seguros.🎲 Além dos dados já fornecidos por você anteriormente como nome e e-mail poderei coletar mais dados posteriormente, mas só se você concordar é claro.',
+        trigger: 'endForm5'
+      },
+      {
+        id:'endForm5',
+        message: 'Por exemplo, se você concordar, posso utilizar a sua localização para identificar quando você está em estabelecimentos parceiros e então facilitar pagamentos e até recomendar descontos.',
+        trigger: () => {
+          global.endform = true;
+          return 'localizaoOption'
+        }
       },
       {
         id:'homeForm',
@@ -225,7 +248,8 @@ export default function generateSteps(userData, navigation){
       {
         id:'distribuidores',
         message: 'Nós estamos sempre atuando em mediadas para termos a maior quantidade de distribuidores. Mas se você conhece algum bar proximo que queira ser parceiro do Zé, pode mandar esse link para ele:\nhhtps://www.ze.com.br',
-        trigger: 'voltaInicio'
+        trigger: 'voltaInicio',
+        delay: 700
       },
       {
         id:'voltaInicio',
@@ -237,6 +261,7 @@ export default function generateSteps(userData, navigation){
         id:'entregador',
         message: 'Nossa! Que horrível, vou me esforçar para resolver essa questão, poderia me dizer em qual desses pedidos o entregador não chegou?',
         trigger: 'entregador2',
+        delay: 700
       },
       {
         id:'entregador2',
