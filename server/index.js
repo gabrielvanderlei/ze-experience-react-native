@@ -2,7 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const mongoosastic = require('mongoosastic');
 const cors = require('cors');
-
 const app = express();
 
 app.use(express.json())
@@ -16,11 +15,7 @@ var chatSchema = new mongoose.Schema({
   clientId: String,
 }, { timestamps: true });
 
-chatSchema.plugin(mongoosastic, {
-  hosts: [
-    'localhost:9200'
-  ]
-});
+chatSchema.plugin(mongoosastic);
 
 var ChatModel = mongoose.model('Chat', chatSchema);
 
@@ -34,25 +29,16 @@ const connectOptions = {
   useUnifiedTopology: true
 };
 
-mongoose.connect('mongodb://localhost/ze-experience', connectOptions);
+mongoose.connect('mongodb://localhost/zeexperience', connectOptions);
 
 app.get('/', (req, res) => {
   res.json({  message: "Server running." });
 })
 
 app.post('/message', (req, res) => {
-  const { data } = req.body;
-  ChatModel.create(data); 
+  ChatModel.create(req.body);
   res.json({ success: true });
   console.log(`Received chat information: ${+(new Date())}`);
-
-  ChatModel.search({
-    query_string: {
-      query: "test"
-    }
-  }, function(err, results) {
-    console.log(results)
-  });
 });
 
 app.listen(3000, function(){
