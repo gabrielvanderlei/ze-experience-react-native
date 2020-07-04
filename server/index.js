@@ -9,9 +9,6 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors());
 
-
-mongoose.connect('mongodb://localhost/ze-experience', {useNewUrlParser: true});
-
 var chatSchema = new mongoose.Schema({
   message: String,
   step: String,
@@ -21,6 +18,18 @@ var chatSchema = new mongoose.Schema({
 
 chatSchema.plugin(mongoosastic)
 var ChatModel = mongoose.model('Chat', chatSchema);
+
+const connectOptions = {
+  useFindAndModify: false,
+  autoIndex: true, // Don't build indexes
+  poolSize: 10, // Maintain up to 10 socket connections
+  bufferMaxEntries: 0,
+  useNewUrlParser: true,
+  family: 4,
+  useUnifiedTopology: true
+};
+
+mongoose.connect('mongodb://localhost/ze-experience', connectOptions);
 
 app.get('/', (req, res) => {
   res.json({  message: "Server running." });
