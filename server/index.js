@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const mongoosastic = require('mongoosastic');
 const cors = require('cors');
 
 const app = express();
@@ -19,6 +20,7 @@ var chatSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 var ChatModel = mongoose.model('Chat', chatSchema);
+ChatModel.plugin(mongoosastic)
 
 app.get('/', (req, res) => {
   res.json({  message: "Server running." });
