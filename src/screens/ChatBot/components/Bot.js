@@ -21,6 +21,7 @@ export default class Bot extends Component {
             pedidos: ['Cachorro Quente', 'Litrão 200ml'],
           },
           props.navigation,
+          props.setDestaques
       ),
     }
   }

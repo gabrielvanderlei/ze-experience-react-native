@@ -3,12 +3,12 @@ import brahma from '../../images/ZeDelivery/cervejas/brahma.jpg';
 import budweiser from '../../images/ZeDelivery/cervejas/budweiser.jpg';
 import antartica from '../../images/ZeDelivery/cervejas/antartica.jpg';
 
-import stella from '../../images/ZeDelivery/cervejas/stella.jpg';
+import stella from '../../images/ZeDelivery/cervejas/stella.jpg'; //4
 import becks from '../../images/ZeDelivery/cervejas/becks.jpg';
 import corona from '../../images/ZeDelivery/cervejas/corona.jpg';
 import bohemia from '../../images/ZeDelivery/cervejas/bohemia.jpg';
 
-import redbull from '../../images/ZeDelivery/semAlcool/redbull.jpg';
+import redbull from '../../images/ZeDelivery/semAlcool/redbull.jpg'; //8
 import pepsi from '../../images/ZeDelivery/semAlcool/pepsi.jpg';
 import gatorade from '../../images/ZeDelivery/semAlcool/gatorade.jpg';
 import h2oh from '../../images/ZeDelivery/semAlcool/h2oh.jpg';

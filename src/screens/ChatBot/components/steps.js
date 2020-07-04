@@ -75,7 +75,7 @@ const getPermissionStatus = async () => {
   global.localON = status === 'granted'
 }
 
-export default function generateSteps(userData, navigation){
+export default function generateSteps(userData, navigation, setDestaques){
   global.valor = 0;
   global.qtd = 0;
   // global.estabelecimento = 'bar do zeca';
@@ -121,7 +121,12 @@ export default function generateSteps(userData, navigation){
       },
       {
         id: 'semAlcool',
-        message: 'Qual desses produtos você prefere?',
+        message: () => {
+          // setDestaques([8,9,10,11])
+          setDestaques('[8,9,10,11]')
+          alert('opa')
+          return 'Qual desses produtos você prefere?'
+        },
         trigger: 'semAlcool2'
       },
       {
