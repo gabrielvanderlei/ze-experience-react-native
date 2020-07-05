@@ -121,7 +121,9 @@ export default function generateSteps(userData, navigation, setDestaques){
             ]
             return msg[Math.floor(Math.random()*msg.length)]
           },
-          trigger: (global.user ? getLastStep('start','home') : getLastStep('start','form1')),
+          trigger:() => {
+           return (global.user ? 'home' : 'form1')
+          },
       },
       //Parte do formulário:
       {
@@ -252,7 +254,7 @@ export default function generateSteps(userData, navigation, setDestaques){
           enviarDadosServidor(previousValue);
           return 'Você tem bom gosto.'
         },
-        trigger: getLastStep('endForm','endForm3')
+        trigger: getLastStep('endForm','start')
       },
       // {
       //   id:'endForm2',
@@ -273,6 +275,7 @@ export default function generateSteps(userData, navigation, setDestaques){
         id:'endForm5',
         message: 'Por exemplo, se você concordar, posso utilizar a sua localização para identificar quando você está em estabelecimentos parceiros e então facilitar pagamentos e até recomendar descontos.😍',
         trigger: () => {
+          global.user = true;
           global.lastStep = 'endForm5'
           global.endform = true;
           return 'localizaoOption'
@@ -281,7 +284,7 @@ export default function generateSteps(userData, navigation, setDestaques){
       {
         id:'homeForm',
         message: 'É isso aí, a gente se entende. Tem algo que eu possa fazer agora?',
-        trigger: getLastStep('homeForm','home2'),
+        trigger: getLastStep('homeForm','start'),
       },
       {
         id:'home',
