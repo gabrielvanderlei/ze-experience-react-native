@@ -58,7 +58,12 @@ Todo o código do servidor está na branch server.
 - Servidor NodeJS: http://161.35.63.2:3000/
 - Kibana: http://161.35.63.2:5601/status
 <p align="center">
-<img src="https://i.imgur.com/q82uVck.jpg" alt="Kibana dashboard recebendo dados" width="900"/>
+<a href="http://161.35.63.2:5601/app/kibana#/discover">
+  <img src="https://i.imgur.com/q82uVck.jpg" alt="Kibana dashboard recebendo dados" width="900"/>
+</a>
+<a href="http://161.35.63.2:5601/app/kibana#/discover">
+  <figcaption>Mensagens recebidas no Kibana</figcaption>
+</a>
 </p>
 
 #### Arquitetura do Servidor
