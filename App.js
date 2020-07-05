@@ -11,6 +11,7 @@ import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
 import * as Location from 'expo-location';
 import Constants from 'expo-constants';
+// import * as SecureStore from 'expo-secure-store';
 
 const LOCATION_TASK_NAME = 'background-location-task';
 const Stack = createStackNavigator();
@@ -51,7 +52,14 @@ export default class App extends Component  {
     };
 
     self = this;
-    
+
+    // if(!SecureStore.getItemAsync('user')){
+    //   global.user = false
+    // }
+    // else{
+    //   global.user = true
+    //   SecureStore.getItemAsync('userId').then(value => global.id = value);
+    // }
   }
   
   arePointsNear(checkPoint, centerPoint, km) {

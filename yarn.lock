@@ -2493,14 +2493,6 @@ expo-asset@~8.1.3:
     path-browserify "^1.0.0"
     url-parse "^1.4.4"
 
-expo-av@~8.1.0:
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/expo-av/-/expo-av-8.1.0.tgz#376e2a821168cd83e997c6dd84350fab6b293f10"
-  integrity sha512-owWxOCyK+dPyT3pF4rDOf2W8Sn8LSEvfw1HvU9xM0wzH7xF0bw3Zs3wcXxvtfhnXAZ5dCDQfvZI5cXk+lml+IQ==
-  dependencies:
-    lodash "^4.17.15"
-    nullthrows "^1.1.0"
-
 expo-background-fetch@~8.1.0:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/expo-background-fetch/-/expo-background-fetch-8.1.0.tgz#0397507486233963b38db948308e04706a639f18"
@@ -2562,6 +2554,11 @@ expo-permissions@~8.1.0:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/expo-permissions/-/expo-permissions-8.1.0.tgz#a7f2ee91ba76ce3a467e7b10adaa9ca5201b226f"
   integrity sha512-QBHD+1J9+sGFnhoEGzMRchPweeEE0OJ9ehG/0l1BMRBA7qsLS9vRC1FTJ55NwjI0Kr4RTha9r6ZX1kZHT09f/w==
+
+expo-secure-store@~8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/expo-secure-store/-/expo-secure-store-8.1.0.tgz#1dcc4705c5264c828592a83842b8be8bbfb5f77f"
+  integrity sha512-EjCx9M2nH7iW3eNOjXl0I7oPypI0es6OStZakimR2iD8riLZp9LYHTj+39Iuz2o1m3OKi+bpwr3cHL52DxcDnA==
 
 expo-sqlite@~8.1.0:
   version "8.1.0"
@@ -5565,6 +5562,11 @@ uuid@^3.3.2, uuid@^3.4.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
+
+uuid@^8.2.0:
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.2.0.tgz#cb10dd6b118e2dada7d0cd9730ba7417c93d920e"
+  integrity sha512-CYpGiFTUrmI6OBMkAdjSDM0k5h8SkkiTP4WAjQgDgNB1S3Ou9VBEvr6q0Kv2H1mMk7IWfxYGpMH5sd5AvcIV2Q==
 
 validate-npm-package-license@^3.0.1:
   version "3.0.4"

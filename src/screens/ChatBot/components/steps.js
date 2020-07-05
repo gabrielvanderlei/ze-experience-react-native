@@ -8,6 +8,30 @@ import * as Permissions from 'expo-permissions';
 import prestigiadas from '../../../images/prestigiadas.png';
 import consagradas from '../../../images/consagradas.png';
 
+import uuid from 'react-native-uuid';
+import * as SecureStore from 'expo-secure-store';
+
+global.acceptDataTransmission = true;
+
+function enviarDadosServidor(mensagem){
+  if(global.acceptDataTransmission){
+    const msg = {
+      message: mensagem,
+      clientId: global.id,
+      step: global.lastStep
+    }
+    
+    fetch('http://161.35.63.2:3000/message',{
+      method: 'post',
+      headers:{
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(msg)
+    })
+  }
+}
+
 const ZeClubLink = function({navigation}){
   return(
     <View>
@@ -70,6 +94,13 @@ const RequestLocButton = function(){
   );
 }
 
+function getLastStep(step, newStep){
+  return () => {
+    global.lastStep = step;
+    return newStep;
+  }
+}
+
 const getPermissionStatus = async () => {
   const { status } = await Location.getPermissionsAsync()
   global.localON = status === 'granted'
@@ -90,30 +121,36 @@ export default function generateSteps(userData, navigation, setDestaques){
             ]
             return msg[Math.floor(Math.random()*msg.length)]
           },
-          trigger: (global.endform ? 'home' : 'form1'),
+          trigger: (global.user ? getLastStep('start','home') : getLastStep('start','form1')),
       },
       //Parte do formulário:
       {
         id:'form1',
         message: 'Gostaria de te conhecer melhor e assim oferecer uma melhor experiência. Beleza?',
-        trigger: 'form2'
+        trigger: getLastStep('form1','endForm3')
       },
       {
         id:'form2',
         options: [
-          { value: 1, label: 'Simbora!', trigger:'form3'},
+          { value: 1, label: 'Simbora!', trigger:() => {
+            global.lastStep = 'form2';
+            return 'form3'
+          }},
         ],
       },
       {
         id:'form3',
-        message: 'Massa, agora escolha uma categoria:',
-        trigger: 'form4',
+        message: ({previousValue}) => {
+          enviarDadosServidor(previousValue);
+          return 'Massa, agora escolha uma categoria:'
+        },
+        trigger: getLastStep('form3','form4'),
       },
       {
         id:'form4',
         options:[
-          { value: 1, label: 'Cervejas', trigger: 'cervejas'},
-          { value: 2, label: 'Sem alcool', trigger: 'semAlcool'},
+          { value: 'cervejas', label: 'Cervejas', trigger: getLastStep('form4','cervejas')},
+          { value: 'semAlcool', label: 'Sem alcool', trigger: getLastStep('form4','semAlcool')},
           // { value: 1, label: 'Vinhos', trigger: 'cervejas'},
           // { value: 1, label: 'Petiscos', trigger: 'cervejas'},
           // { value: 1, label: 'Outros', trigger: 'cervejas'},
@@ -121,92 +158,101 @@ export default function generateSteps(userData, navigation, setDestaques){
       },
       {
         id: 'semAlcool',
-        message: () => {
+        message: ({previousValue}) => {
+          enviarDadosServidor(previousValue);
           setDestaques([8,9,10,11])
           return 'Qual desses produtos você prefere?'
         },
-        trigger: 'semAlcool2'
+        trigger: getLastStep('semAlcool','semAlcool2')
       },
       {
         id: 'semAlcool2',
         options: [
-          {value: 'Pepsi', label: 'Pepsi', trigger: 'semAlcool3'},
-          {value: 'redbull', label: 'Redbull', trigger: 'semAlcool3'},
-          {value: 'Gatorade', label: 'Gatorade', trigger: 'semAlcool3'},
-          {value: 'H2OH', label: 'H2OH', trigger: 'semAlcool3'},
-          {value: 'Sukita', label: 'Sukita', trigger: 'semAlcool3'},
+          {value: 'Pepsi', label: 'Pepsi', trigger: getLastStep('semAlcool2','semAlcool3')},
+          {value: 'redbull', label: 'Redbull', trigger: getLastStep('semAlcool2','semAlcool3')},
+          {value: 'Gatorade', label: 'Gatorade', trigger: getLastStep('semAlcool2','semAlcool3')},
+          {value: 'H2OH', label: 'H2OH', trigger: getLastStep('semAlcool2','semAlcool3')},
+          {value: 'Sukita', label: 'Sukita', trigger: getLastStep('semAlcool2','semAlcool3')},
         ]
       },
       {
         id: 'semAlcool3',
-        message: 'Boa escolha',
-        trigger: 'endForm3'
+        message: ({previousValue}) => {
+         enviarDadosServidor(previousValue);
+         return 'Boa escolha'
+        },
+        trigger: getLastStep('semAlcool3','endForm3')
       },
       {
         id: 'cervejas',
         message: 'Qual dessas duas você gosta mais?',
-        trigger: 'cervejas2',
+        trigger: getLastStep('cervejas','cervejas2'),
       },
       {
         id: 'cervejas2',
         //um custom mostrando as imagens e falando o texto abaixo:
         // message: 'As consagradas',
         component: <Consagradas/>,
-        trigger: 'cervejas3',
+        trigger: getLastStep('cervejas2','cervejas3'),
       },
       {
         id: 'cervejas3',
         //um custom mostrando as imagens e falando o texto abaixo:
         // message: 'As prestigiadas',
         component: <Prestigiadas/>,
-        trigger: 'cervejas4',
+        trigger: getLastStep('cervejas3','cervejas4'),
       },
       {
         id: 'cervejas4',
         options: [
-          { value: 1, label: 'As consagradas', trigger: 'consagradas' },
-          { value: 2, label: 'As prestigiadas', trigger: 'prestigiadas' },
+          { value: 'Consagradas', label: 'As consagradas', trigger: getLastStep('cervejas4','consagradas') },
+          { value: 'Prestigiadas', label: 'As prestigiadas', trigger: getLastStep('cervejas4','prestigiadas') },
         ],
       },
       {
         id: 'consagradas',
-        message: () => {
+        message: ({previousValue}) => {
+          enviarDadosServidor(previousValue);
           setDestaques([0,1,2,3])
           return `Boa ${userData.userName} você é como eu, não abre mão de uma boa consagrada`
         },
-        trigger: 'escolhaConsagrada'
+        trigger: getLastStep('consagradas','escolhaConsagrada')
       },
       {
         id: 'prestigiadas',
-        message: () => {
+        message: ({previousValue}) => {
+          enviarDadosServidor(previousValue);
           setDestaques([4,5,6,7])
           return `Boa ${userData.userName} você é como eu, não abre mão de uma boa prestigiada`
         },
-        trigger: 'escolhaPrestigiada'
+        trigger: getLastStep('prestigiadas','escolhaPrestigiada')
       },
       {
         id: 'escolhaConsagrada',
         options: [
-          { value: 1, label: 'Skol', trigger: 'endForm'},
-          { value: 2, label: 'Brahma', trigger: 'endForm'},
-          { value: 3, label: 'Budweiser', trigger: 'endForm'},
-          { value: 4, label: 'Antartica', trigger: 'endForm'},
+          { value: 'Skol', label: 'Skol', trigger: getLastStep('escolhaConsagrada','endForm')},
+          { value: 'Brahma', label: 'Brahma', trigger: getLastStep('escolhaConsagrada','endForm')},
+          { value: 'Budweiser', label: 'Budweiser', trigger: getLastStep('escolhaConsagrada','endForm')},
+          { value: 'Antartica', label: 'Antartica', trigger: getLastStep('escolhaConsagrada','endForm')},
         ]
       },
       {
         id: 'escolhaPrestigiada',
         options: [
-          { value: 1, label: 'Stella Artois', trigger: 'endForm'},
-          { value: 2, label: 'Beck\'s', trigger: 'endForm'},
-          { value: 3, label: 'Corona', trigger: 'endForm'},
-          { value: 4, label: 'Bohemia', trigger: 'endForm'},
+          { value: 'Stella Artois', label: 'Stella Artois', trigger: getLastStep('escolhaPrestigiada','endForm')},
+          { value: 'Beck\'s', label: 'Beck\'s', trigger: getLastStep('escolhaPrestigiada','endForm')},
+          { value: 'Corona', label: 'Corona', trigger: getLastStep('escolhaPrestigiada','endForm')},
+          { value: 'Bohemia', label: 'Bohemia', trigger: getLastStep('escolhaPrestigiada','endForm')},
         ]
       },
       {
         id:'endForm',
         //aqui é pra ter uma div com o produto que o usuário escolheu
-        message: 'Você tem bom gosto.',
-        trigger: 'endForm3'
+        message: ({previousValue}) => {
+          enviarDadosServidor(previousValue);
+          return 'Você tem bom gosto.'
+        },
+        trigger: getLastStep('endForm','endForm3')
       },
       // {
       //   id:'endForm2',
@@ -216,30 +262,32 @@ export default function generateSteps(userData, navigation, setDestaques){
       {
         id:'endForm3',
         message: 'Sabendo os seus gostos eu poderei te ajudar nas próximas compras, recomendações, atalhos nas conversas comigo. Usarei estes dados a seu favor! 😀 Você pode saber melhor sobre nossa política de privacidade em ze.experience/privacy',
-        trigger: 'endForm4'
+        trigger: getLastStep('endForm3','endForm4')
       },
       {
         id:'endForm4',
         message: ' Pode ficar tranquilo, seus dados estão seguros.🎲 Além dos dados já fornecidos por você anteriormente como nome e e-mail poderei coletar mais dados posteriormente, mas só se você concordar é claro.',
-        trigger: 'endForm5'
+        trigger: getLastStep('endForm4','endForm5')
       },
       {
         id:'endForm5',
         message: 'Por exemplo, se você concordar, posso utilizar a sua localização para identificar quando você está em estabelecimentos parceiros e então facilitar pagamentos e até recomendar descontos.',
         trigger: () => {
+          global.lastStep = 'endForm5'
           global.endform = true;
           return 'localizaoOption'
         }
       },
       {
         id:'homeForm',
-        message: 'E agora que eu te conheço melhor, ja posso te ajudar, tem algo que eu possa fazer agora?',
-        trigger: 'home2',
+        message: 'É isso aí, a gente se entende. Tem algo que eu possa fazer agora?',
+        trigger: getLastStep('homeForm','home2'),
       },
       {
         id:'home',
         message: 'Tem algo em que eu possa te ajudar?',
         trigger:  () => {
+            global.lastStep = 'home'
             // getPermissionStatus()
             // alert(global.localON?'TRU':'FALSU')
             if(global.localON){
@@ -255,65 +303,89 @@ export default function generateSteps(userData, navigation, setDestaques){
       {
         id:'localizacao',
         message: 'Gostaria de fornecer a localização para que eu possa te mandar descontos e lhe mostrar o cardápio quando estiver em um estabelecimento parceiro?',
-        trigger: 'localizaoOption'
+        trigger: getLastStep('localizacao','localizaoOption')
       },
       {
         id: 'localizaoOption',
         component: <RequestLocButton/>,
-        trigger: 'home2'
+        trigger: getLastStep('localizaoOption','dadosChat')
+      },
+      {
+        id: 'dadosChat',
+        message: 'Também posso utilizar os dados de nossas conversas para análise de nossos usuários e experiência expecífica voltada a você. Não se preocupe, é tudo enviado se forma anônima.',
+        trigger: getLastStep('dadosChat','aceitar')
+      },
+      {
+        id: 'aceitar',
+        options: [
+          {value:'sim',label: 'Aceitar compartilhar dados.', trigger: getLastStep('aceitar','aceitar2')},
+          {value:'não',label: 'Não quero compartilhar dados.', trigger: getLastStep('aceitar','homeForm')}
+        ]
+      },
+      {
+        id: 'aceitar2',
+        message: ({previousValue}) => {
+          enviarDadosServidor(previousValue);
+          const id = uuid.v1();
+          SecureStore.setItemAsync('userId', id);
+          global.id = id;
+          global.acceptDataTransmission = true;
+          return 'Obrigado por me ajudar a te ajudar!'
+        },
+        trigger: getLastStep('aceitar2','form2')
       },
       {
         id: 'homeFull',
         message: 'Tem algo em que eu possa te ajudar?',
-        trigger: 'homeFull2'
+        trigger: getLastStep('homeFull','homeFull2')
       },
       {
         id: 'homeFull2',
         options: [
-          { value: '1', label: 'Me ajuda, Zé!', trigger: 'ajudaZe'},
-          { value: '2', label: 'Quero juntar a galera!', trigger: 'juntarGalera'},
-          { value: '3', label: 'Acessar o Zé Club', trigger: 'zeClub'},
-          { value: '4', label: 'Cardápio', trigger: 'shopOptions'},
-          { value: '5', label: 'Pagar Conta', trigger: 'pagarConta'}
+          { value: '1', label: 'Me ajuda, Zé!', trigger: getLastStep('homeFull2','ajudaZe')},
+          { value: '2', label: 'Quero juntar a galera!', trigger: getLastStep('homeFull2','juntarGalera')},
+          { value: '3', label: 'Acessar o Zé Club', trigger: getLastStep('homeFull2','zeClub')},
+          { value: '4', label: 'Cardápio', trigger: getLastStep('homeFull2','shopOptions')},
+          { value: '5', label: 'Pagar Conta', trigger: getLastStep('homeFull2','pagarConta')}
         ]
       },
       {
         id: 'home2',
         options: [
-          { value: '1', label: 'Me ajuda, Zé!', trigger: 'ajudaZe'},
-          { value: '2', label: 'Quero juntar a galera!', trigger: 'juntarGalera'},
-          { value: '3', label: 'Acessar o Zé Club', trigger: 'zeClub'},
+          { value: '1', label: 'Me ajuda, Zé!', trigger: getLastStep('home2','ajudaZe')},
+          { value: '2', label: 'Quero juntar a galera!', trigger: getLastStep('home2','juntarGalera')},
+          { value: '3', label: 'Acessar o Zé Club', trigger: getLastStep('home2','zeClub')},
         ]
       },
       {
         id:'ajudaZe',
         message: 'Certo, em que posso te ajudar?',
-        trigger: 'ajudaOptions'
+        trigger: getLastStep('ajudaZe','ajudaOptions')
       },
       {
         id: 'ajudaOptions',
         options: [
-          { value:1,label:'Não tem distribuidores aqui perto.',trigger:'distribuidores'},
-          { value:2,label:'O entregador não chegou.',trigger:'entregador'},
-          { value:3,label:'Quero relatar outro problema',trigger:'outroProblema'},
+          { value:1,label:'Não tem distribuidores aqui perto.',trigger:getLastStep('ajudaOptions','distribuidores')},
+          { value:2,label:'O entregador não chegou.',trigger:getLastStep('ajudaOptions','entregador')},
+          { value:3,label:'Quero relatar outro problema',trigger:getLastStep('ajudaOptions','outroProblema')},
         ],
       },
       {
         id:'distribuidores',
         message: 'Nós estamos sempre atuando em mediadas para termos a maior quantidade de distribuidores. Mas se você conhece algum bar proximo que queira ser parceiro do Zé, pode mandar esse link para ele:\nhhtps://www.ze.com.br',
-        trigger: 'voltaInicio',
+        trigger: getLastStep('distribuidores','voltaInicio'),
         delay: 700
       },
       {
         id:'voltaInicio',
         options:[
-          {value: 1, label: 'Voltar ao inicio', trigger: 'home'}
+          {value: 1, label: 'Voltar ao inicio', trigger: getLastStep('voltaInicio','home')}
         ]
       },
       {
         id:'entregador',
         message: 'Nossa! Que horrível, vou me esforçar para resolver essa questão, poderia me dizer em qual desses pedidos o entregador não chegou?',
-        trigger: 'entregador2',
+        trigger: getLastStep('entregador','entregador2'),
         delay: 700
       },
       {
@@ -324,7 +396,7 @@ export default function generateSteps(userData, navigation, setDestaques){
             let temp = {
               value: x,
               label: x,
-              trigger: 'ajudarEntregador',
+              trigger: getLastStep('entregador2','ajudarEntregador'),
             }
             pedidos.push(temp);
           }
@@ -334,43 +406,46 @@ export default function generateSteps(userData, navigation, setDestaques){
       {
         id: 'ajudarEntregador',
         message: ({previousValue}) => `Vou fazer o possível parar que você receba o seu pedido (${previousValue})`,
-        trigger: 'fimEntregador',
+        trigger: getLastStep('ajudarEntregador','fimEntregador'),
       },
       {
         id: 'fimEntregador',
         message: 'Você tem problemas com mais algum pedido?',
-        trigger: 'entregadorMaisPedidos'
+        trigger: getLastStep('fimEntregador','entregadorMaisPedidos')
       },
       {
         id: 'entregadorMaisPedidos',
         options: [
-          { value: 1, label: 'Sim', trigger: 'entregador2'},
-          { value: 2, label: 'Não', trigger: 'home'}
+          { value: 1, label: 'Sim', trigger: getLastStep('entregadorMaisPedidos','entregador2')},
+          { value: 2, label: 'Não', trigger: getLastStep('entregadorMaisPedidos','home')}
         ]
       },
       {
         id: 'outroProblema',
         message: 'Meus parças estão sempre dispostos a te ajudar em qualquer problema que houver. Por favor, descreva o seu problema que um de nossos atendentes o atenderá!',
-        trigger: 'outroProblema2',
+        trigger: getLastStep('outroProblema','outroProblema2'),
       },
       {
         id: 'outroProblema2',
         user: true,
-        trigger: 'voltaInicio'
+        trigger: getLastStep('outroProblema2','voltaInicio')
       },
       {
         id:'juntarGalera',
-        message: 'Qual o nome da sua turma?',
-        trigger: 'juntarGalera2',
+        message: ({previousValue}) => {
+          return 'Qual o nome da sua turma?'
+        },
+        trigger: getLastStep('juntarGalera','juntarGalera2'),
       },
       {
         id:'juntarGalera2',
         user: true,
-        trigger: 'juntarGalera3'
+        trigger: getLastStep('juntarGalera2','juntarGalera3')
       },
       {
         id:'juntarGalera3',
         message: ({previousValue}) => {
+          enviarDadosServidor(previousValue);
           let splited = previousValue.split(' ');
           let link = ''
           for(let i of splited){
@@ -378,37 +453,38 @@ export default function generateSteps(userData, navigation, setDestaques){
           }
           return `Certo, criei uma sala no Zé Club para facilitar :).\n\nPelo Zé Club você vai poder pedir suas geladas, receber promoções exclusivas e claro, realizar aquele drinking game com a galera.\n\nVocê pode acessar a sala clicando no botão abaixo. Compartilhe com seus amigos para acessarem também.\n\n${'grupo-link.zé/' + link.substring(0,link.length - 1)}`;
         },
-        trigger: 'voltaInicio',
+        trigger: getLastStep('juntarGalera3','voltaInicio'),
       },
       {
         id:'zeClub',
         message: 'Estou te redirecionando para o Zé Club',
-        trigger: 'zeClub2',
+        trigger: getLastStep('zeClub', 'zeClub2'),
       },
       {
         id:'zeClub2',
         component: <ZeClubLink navigation={navigation}/>,
-        trigger: 'home'
+        trigger: getLastStep('zeClub2', 'home')
       },
       {
         id: 'tellConection',
         message: () => 'Opa, eu percebi que você se conectou com ' + global.estabelecimento + ' um de nossos parceiros! Que tal dar uma olhada no cardápio? Você pode realizar o pagamento via app ou pelo QRCode 😎',
-        trigger: 'optionsConection',
+        trigger: getLastStep('tellConection','optionsConection'),
       },
       {
         id: 'tellConectionShop',
         message: () => 'Opa, localizei que você está no ' + global.estabelecimento + ', um de nossos parceiros!',
-        trigger: 'tellConectionShop2'
+        trigger: getLastStep('tellConectionShop','tellConectionShop2')
       },
       {
         id: 'tellConectionShop2',
         message: 'Apresente o QRCode abaixo no caixa para descontos especiais na linha de energéticos Gartorade',
-        trigger: 'tellConectionShop3'
+        trigger: getLastStep('tellConectionShop3','tellConectionShop3')
       },
       {
         id: 'tellConectionShop3',
         component: <QRCode/>,
         trigger: () => {
+          global.lastStep = 'tellConectionShop3'
           global.cupom = false;
          return 'tellConectionShop4';
         }
@@ -416,68 +492,71 @@ export default function generateSteps(userData, navigation, setDestaques){
       {
         id: 'tellConectionShop4',
         options: [
-          {value: 1, label: 'Gostei do cupom', trigger: 'obrigadoCupom'},
-          {value: 2, label: 'Obter mais cupons', trigger: 'semCupons'}
+          {value: 'Gostei', label: 'Gostei do cupom', trigger: getLastStep('tellConectionShop4','obrigadoCupom')},
+          {value: '2', label: 'Obter mais cupons', trigger: getLastStep('tellConectionShop4','semCupons')}
         ]
       },
       {
         id: 'semCupons',
         message: 'Cara, acabou. Me segue lá no Twitter @ZeDelivery, quem sabe você acha alguns rsrs',
-        trigger: 'home'
+        trigger: getLastStep('semCupons','home')
       },
       {
         id: 'obrigadoCupom',
-        message: 'Com o Zé seu amigão, é cupom na mão! 🖐️',
-        trigger: 'home'
+        message: ({previousValue}) => {
+          enviarDadosServidor(previousValue);
+          return 'Com o Zé seu amigão, é cupom na mão! 🖐️'},
+        trigger: getLastStep('obrigadoCupom','home')
       },
       {
         id: 'optionsConection',
         options: [
-          {value: 1, label: 'Sim', trigger: 'goShop'},
-          {value: 2, label: 'Não', trigger: 'return'}
+          {value: 'Sim', label: 'Sim', trigger: getLastStep('optionsConection','goShop')},
+          {value: 'Não', label: 'Não', trigger: getLastStep('optionsConection','return')}
         ]
       },
       {
         id:'goShop',
         message: 'Massa, então ta ai em baixo as opções, escolhe uma delas:',
-        trigger: 'shopOptions'
+        trigger: getLastStep('goShop','shopOptions')
       },
       {
         id: 'shopOptions',
         options: [
-          {value: 1, label: 'Bebidas Alcoolicas', trigger: 'bebidasAlcoolicas'},
-          {value: 2, label: 'Sucos', trigger: 'sucos'},
-          {value: 3, label: 'Aperitivos', trigger: 'aperitivos'},
+          {value: 'Alcoolicas', label: 'Bebidas Alcoolicas', trigger: getLastStep('shopOptions','bebidasAlcoolicas')},
+          {value: 'Sucos', label: 'Sucos', trigger: getLastStep('shopOptions','sucos')},
+          {value: 'Aperitivos', label: 'Aperitivos', trigger: getLastStep('shopOptions','aperitivos')},
         ]
       },
       {
         id: 'bebidasAlcoolicas',
         options: [
-          {value: '8', label: 'Skol 300ml: R$ 8,00', trigger: 'qtd'},
-          {value: '7', label: 'Brhama 300ml: R$ 7,00', trigger: 'qtd'},
-          {value: '15', label: 'Budweiser 300ml: R$ 15,00', trigger: 'qtd'},
+          {value: '8', label: 'Skol 300ml: R$ 8,00', trigger: getLastStep('bebidasAlcoolicas','qtd')},
+          {value: '7', label: 'Brhama 300ml: R$ 7,00', trigger: getLastStep('bebidasAlcoolicas','qtd')},
+          {value: '15', label: 'Budweiser 300ml: R$ 15,00', trigger: getLastStep('bebidasAlcoolicas','qtd')},
         ]
       },
       {
         id: 'sucos',
         options: [
-          {value: '3', label: 'Uva 300ml: R$ 3,00', trigger: 'qtd'},
-          {value: '4', label: 'Laranja 300ml: R$ 4,00', trigger: 'qtd'},
+          {value: '3', label: 'Uva 300ml: R$ 3,00', trigger: getLastStep('sucos','qtd')},
+          {value: '4', label: 'Laranja 300ml: R$ 4,00', trigger: getLastStep('sucos','qtd')},
         ]
       },
       {
         id: 'aperitivos',
         options: [
-          {value: '3', label: 'Espetinho: R$ 3,00', trigger: 'qtd'},
+          {value: '3', label: 'Espetinho: R$ 3,00', trigger: getLastStep('aperitivos','qtd')},
         ] 
       },
       {
         id: 'qtd',
         message: ({previousValue}) => {
+          enviarDadosServidor(previousValue);
           global.value = previousValue;
           return  'Qual a quantidade?'
         },
-        trigger: 'qtd2'
+        trigger: getLastStep('qtd','qtd2')
       },
       {
         id:'qtd2',
@@ -488,44 +567,45 @@ export default function generateSteps(userData, navigation, setDestaques){
           }
           return true;
         },
-        trigger: 'qtd3'
+        trigger: getLastStep('qtd2','qtd3')
       },
       {
         id: 'qtd3',
         message: ({previousValue}) => {
+          enviarDadosServidor(previousValue);
           // global.qtd = previousValue
           global.qtd += parseInt(global.value) * parseInt(previousValue)
           return 'Beleza!';
         },
-        trigger: 'addMore',
+        trigger: getLastStep('qtd3','addMore'),
       },
       {
         id: 'addMore',
         message: 'Você deseja adicionar mais produtos?',
-        trigger: 'addMore2',
+        trigger: getLastStep('addMore', 'addMore2'),
       },
       {
         id: 'addMore2',
         options: [
-          {value: 1, label: 'Sim', trigger: 'shopOptions'},
-          {value: 2, label: 'Não', trigger: 'homeFull'}
+          {value: 1, label: 'Sim', trigger: getLastStep('addMore2', 'shopOptions')},
+          {value: 2, label: 'Não', trigger: getLastStep('addMore2', 'homeFull')}
         ]
       },
       {
         id:'pagarConta',
         message: 'Certo!',
-        trigger: 'confirmarPagamento'
+        trigger: getLastStep('pagarConta','confirmarPagamento')
       },
       {
         id: 'confirmarPagamento',
         message:() => 'Você realmente quer fechar sua conta? O valor atual é de: R$' + global.qtd,
-        trigger:'confirmarPagamento2'
+        trigger:getLastStep('confirmarPagamento', 'confirmarPagamento2')
       },
       {
         id: 'confirmarPagamento2',
         options: [
-          {value: 1, label: 'Sim', trigger: 'openQR'},
-          {value: 2, label: 'Não', trigger: 'homeFull'}
+          {value: 1, label: 'Sim', trigger: getLastStep('confirmarPagamento2', 'openQR')},
+          {value: 2, label: 'Não', trigger: getLastStep('confirmarPagamento2', 'homeFull')}
         ]
       },
       {
@@ -534,12 +614,12 @@ export default function generateSteps(userData, navigation, setDestaques){
           global.qr = true;
           return 'Agora aperte no botão de QRCode e leia com a sua camera para confirmar-mos o pagamento!'
         },
-        trigger: 'homeFull'
+        trigger: getLastStep('openQR', 'homeFull')
       },
       {
         id: 'return',
         message: 'OK, vamos voltar para onde estávamos',
-        trigger: 'homeFull'
+        trigger: getLastStep('return', 'homeFull')
       }
     ]
   }

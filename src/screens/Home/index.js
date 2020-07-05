@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { StyleSheet, Dimensions, Text, ScrollView, StatusBar, Image, View } from 'react-native';
 import { NavBar, Button, Block, Card, Input, theme } from 'galio-framework';
-import { Video } from 'expo-av';
+
 
 import {
   ChatBotButton,
@@ -82,16 +82,6 @@ export default class Home extends React.Component {
             </Text>
             
             <View style={{height: 170, width: '100%', marginTop: 20, alignItems: 'center'}}>
-            {/* <Video
-                source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
-                rate={1.0}
-                volume={1.0}
-                isMuted={true}
-                resizeMode={'contain'}
-                shouldPlay={true}
-                useNativeControls
-                isLooping
-              /> */}
               <Image source={IMGvideo}/>
             </View>
           </View>
