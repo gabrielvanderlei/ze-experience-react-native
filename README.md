@@ -60,23 +60,26 @@ Todo o código do servidor está na branch server.
 <p align="center">
 <img src="https://i.imgur.com/q82uVck.jpg" alt="Kibana dashboard recebendo dados" width="500"/>
 </p>
-##### Arquitetura do Servidor
+
+#### Arquitetura do Servidor
 O servidor está utilizando a runtime Node.js, com roteamento controlado pelo framework Express.js. 
 Os dados são salvos em um banco de dados MongoDB, indexados em uma instância do servidor de buscas Elasticsearch e disponibilizados no sevidor Kibana.
 Todo o servidor está codificado na branch server no arquivo server/index.js .
 
 ### Feito Com
 **Cliente**
-	- [Expo]([https://docs.expo.io/](https://docs.expo.io/)) - O Expo CLI é um aplicativo de linha de comando que é a principal interface entre um desenvolvedor e as ferramentas da Expo. Desenvolvendo seu aplicativo: executando o servidor do projeto, visualizando logs, abrindo seu aplicativo em um simulador.
-	- [React Native](http://facebook.github.io/react-native/) - O React Native é um framework que permite o desenvolvimento de aplicações mobile usando JavaScript e React;
-	- [React Navigation](https://reactnavigation.org/) - O React Navigation surgiu da necessidade comunidade do React Native de uma navegação de forma fácil de se usar, e escrita toda em JavaScript;
+
+- [Expo](https://docs.expo.io/) - O Expo CLI é um aplicativo de linha de comando que é a principal interface entre um desenvolvedor e as ferramentas da Expo. Desenvolvendo seu aplicativo: executando o servidor do projeto, visualizando logs, abrindo seu aplicativo em um simulador.
+- [React Native](http://facebook.github.io/react-native/) - O React Native é um framework que permite o desenvolvimento de aplicações mobile usando JavaScript e React;
+- [React Navigation](https://reactnavigation.org/) - O React Navigation surgiu da necessidade comunidade do React Native de uma navegação de forma fácil de se usar, e escrita toda em JavaScript;
 
 **Servidor**
-	- [Node.js / npm]([https://nodejs.org/en/](https://nodejs.org/en/)) - Node.js® é runtime JavaScript feito com a [Chrome's V8 JavaScript engine](https://v8.dev/).
-	- [Express.js](https://expressjs.com/pt-br/) - Framework web rápido, flexível e minimalista para [Node.js](http://nodejs.org/)
-	- [MongoDB](https://www.mongodb.com/) - O MongoDB é um banco de dados distribuído, baseado em documentos e de propósito geral, criado para desenvolvedores de aplicativos modernos e para a era da nuvem.
-	- [Elasticsearch](https://www.elastic.co/pt/what-is/elasticsearch) - O Elasticsearch é um mecanismo de busca e análise de dados distribuído e open source para todos os tipos de dados, incluindo textuais, numéricos, geoespaciais, estruturados e não estruturados.
-	- [Kibana](https://www.elastic.co/pt/kibana) - O Kibana é uma interface de usuário gratuita e aberta para você visualizar seus dados do Elasticsearch e navegar no Elastic Stack. Faça qualquer coisa, desde monitorar a carga de consultas até entender como as solicitações fluem pelos seus apps.
+
+- [Node.js / npm](https://nodejs.org/en/) - Node.js® é runtime JavaScript feito com a [Chrome's V8 JavaScript engine](https://v8.dev/).
+- [Express.js](https://expressjs.com/pt-br/) - Framework web rápido, flexível e minimalista para [Node.js](http://nodejs.org/)
+- [MongoDB](https://www.mongodb.com/) - O MongoDB é um banco de dados distribuído, baseado em documentos e de propósito geral, criado para desenvolvedores de aplicativos modernos e para a era da nuvem.
+- [Elasticsearch](https://www.elastic.co/pt/what-is/elasticsearch) - O Elasticsearch é um mecanismo de busca e análise de dados distribuído e open source para todos os tipos de dados, incluindo textuais, numéricos, geoespaciais, estruturados e não estruturados.
+- [Kibana](https://www.elastic.co/pt/kibana) - O Kibana é uma interface de usuário gratuita e aberta para você visualizar seus dados do Elasticsearch e navegar no Elastic Stack. Faça qualquer coisa, desde monitorar a carga de consultas até entender como as solicitações fluem pelos seus apps.
 
 
 ### Pré-requisitos
