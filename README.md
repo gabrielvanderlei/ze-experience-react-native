@@ -193,7 +193,11 @@ Distribuído sob a licença MIT. Veja `LICENSE` para mais informações.
 ## Contato
 
 Gabriel Vanderlei - [Github](https://github.com/gabrielvanderlei) - **dev@gabrielvanderlei.com**
+
 Samuel Simões - [Github](https://github.com/samuelsimoes31)
+
 José Vitor - [Github](https://github.com/jszvitor)
+
 Ian Karlo - [Github](https://github.com/iankarlo)
+
 Gustavo Nascimento - [Github](https://github.com/Gustanascimento)
