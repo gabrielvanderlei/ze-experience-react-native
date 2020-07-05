@@ -150,7 +150,7 @@ export default function generateSteps(userData, navigation, setDestaques){
         id:'form4',
         options:[
           { value: 'cervejas', label: 'Cervejas', trigger: getLastStep('form4','cervejas')},
-          { value: 'semAlcool', label: 'Sem alcool', trigger: getLastStep('form4','semAlcool')},
+          { value: 'semAlcool', label: 'Sem álcool', trigger: getLastStep('form4','semAlcool')},
           // { value: 1, label: 'Vinhos', trigger: 'cervejas'},
           // { value: 1, label: 'Petiscos', trigger: 'cervejas'},
           // { value: 1, label: 'Outros', trigger: 'cervejas'},
@@ -214,7 +214,7 @@ export default function generateSteps(userData, navigation, setDestaques){
         message: ({previousValue}) => {
           enviarDadosServidor(previousValue);
           setDestaques([0,1,2,3])
-          return `Boa ${userData.userName} você é como eu, não abre mão de uma boa consagrada`
+          return `Boa ${userData.userName} você é como eu, não abre mão de uma boa consagrada. Qual a sua favorita?`
         },
         trigger: getLastStep('consagradas','escolhaConsagrada')
       },
@@ -223,7 +223,7 @@ export default function generateSteps(userData, navigation, setDestaques){
         message: ({previousValue}) => {
           enviarDadosServidor(previousValue);
           setDestaques([4,5,6,7])
-          return `Boa ${userData.userName} você é como eu, não abre mão de uma boa prestigiada`
+          return `Boa ${userData.userName} você é como eu, não abre mão de uma boa prestigiada. Qual sua favorita?`
         },
         trigger: getLastStep('prestigiadas','escolhaPrestigiada')
       },
@@ -261,7 +261,7 @@ export default function generateSteps(userData, navigation, setDestaques){
       // },
       {
         id:'endForm3',
-        message: 'Sabendo os seus gostos eu poderei te ajudar nas próximas compras, recomendações, atalhos nas conversas comigo. Usarei estes dados a seu favor! 😀 Você pode saber melhor sobre nossa política de privacidade em ze.experience/privacy',
+        message: 'Sabendo os seus gostos eu poderei te ajudar nas próximas compras, recomendações, atalhos nas conversas comigo. Usarei estes dados a seu favor! 😀 Você pode saber melhor sobre nossa política de privacidade em www.ze.experience/privacy',
         trigger: getLastStep('endForm3','endForm4')
       },
       {
@@ -271,7 +271,7 @@ export default function generateSteps(userData, navigation, setDestaques){
       },
       {
         id:'endForm5',
-        message: 'Por exemplo, se você concordar, posso utilizar a sua localização para identificar quando você está em estabelecimentos parceiros e então facilitar pagamentos e até recomendar descontos.',
+        message: 'Por exemplo, se você concordar, posso utilizar a sua localização para identificar quando você está em estabelecimentos parceiros e então facilitar pagamentos e até recomendar descontos.😍',
         trigger: () => {
           global.lastStep = 'endForm5'
           global.endform = true;
@@ -372,8 +372,8 @@ export default function generateSteps(userData, navigation, setDestaques){
       },
       {
         id:'distribuidores',
-        message: 'Nós estamos sempre atuando em mediadas para termos a maior quantidade de distribuidores. Mas se você conhece algum bar proximo que queira ser parceiro do Zé, pode mandar esse link para ele:\nhhtps://www.ze.com.br',
         trigger: getLastStep('distribuidores','voltaInicio'),
+        message: 'Nós estamos sempre atuando em medidas para termos a maior quantidade de distribuidores. Mas se você conhece algum bar proximo que queira ser parceiro do Zé, pode mandar esse link para ele:\nhhtps://www.ze.experience/parceria',
         delay: 700
       },
       {
@@ -467,7 +467,7 @@ export default function generateSteps(userData, navigation, setDestaques){
       },
       {
         id: 'tellConection',
-        message: () => 'Opa, eu percebi que você se conectou com ' + global.estabelecimento + ' um de nossos parceiros! Que tal dar uma olhada no cardápio? Você pode realizar o pagamento via app ou pelo QRCode 😎',
+        message: () => 'Opa, eu percebi que você estava no ' + global.estabelecimento + ', um de nossos parceiros! Que tal dar uma olhada no cardápio? Você pode realizar o pagamento via app ou pelo QRCode 😎',
         trigger: getLastStep('tellConection','optionsConection'),
       },
       {

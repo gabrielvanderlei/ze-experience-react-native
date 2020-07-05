@@ -18,7 +18,7 @@ export default class Bot extends Component {
       steps: generateSteps(
           {
             userName: 'João',
-            pedidos: ['Cachorro Quente', 'Litrão 200ml'],
+            pedidos: ['Gatorade Laranja 500ml', 'Skol 350ml', 'Red Bull Energy Drink 473ml'],
           },
           props.navigation,
           props.setDestaques

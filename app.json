@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "ze-experience",
-    "slug": "ze-experience",
-    "version": "1.0.0",
+    "name": "Zé Experience",
+    "slug": "ze-experiencev3",
+    "version": "1.3.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -11,8 +11,8 @@
       "backgroundColor": "#ffffff"
     },
     "android": {
-      "package": "com.featureStacks.zeExperience",
-      "versionCode": 1
+      "package": "com.featureStacks.zeExperiencev3",
+      "versionCode": 3
     },
     "updates": {
       "fallbackToCacheTimeout": 0
