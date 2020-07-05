@@ -113,7 +113,7 @@ export default function generateSteps(userData, navigation, setDestaques){
         id:'form4',
         options:[
           { value: 1, label: 'Cervejas', trigger: 'cervejas'},
-          { value: 2, label: 'Sem alcool', trigger: 'semAlcool'},
+          { value: 2, label: 'Sem álcool', trigger: 'semAlcool'},
           // { value: 1, label: 'Vinhos', trigger: 'cervejas'},
           // { value: 1, label: 'Petiscos', trigger: 'cervejas'},
           // { value: 1, label: 'Outros', trigger: 'cervejas'},
@@ -172,15 +172,15 @@ export default function generateSteps(userData, navigation, setDestaques){
         id: 'consagradas',
         message: () => {
           setDestaques([0,1,2,3])
-          return `Boa ${userData.userName} você é como eu, não abre mão de uma boa consagrada`
+          return `Boa ${userData.userName} você é como eu, não abre mão de uma boa consagrada. Qual a sua favorita?`
         },
         trigger: 'escolhaConsagrada'
       },
       {
         id: 'prestigiadas',
         message: () => {
-          setDestaques([4,5,6,7])
-          return `Boa ${userData.userName} você é como eu, não abre mão de uma boa prestigiada`
+          setDestaques([4,14,13,5,6,7])
+          return `Boa ${userData.userName} você é como eu, não abre mão de uma boa prestigiada. Qual a sua favorita?`
         },
         trigger: 'escolhaPrestigiada'
       },
@@ -215,7 +215,7 @@ export default function generateSteps(userData, navigation, setDestaques){
       // },
       {
         id:'endForm3',
-        message: 'Sabendo os seus gostos eu poderei te ajudar nas próximas compras, recomendações, atalhos nas conversas comigo. Usarei estes dados a seu favor! 😀 Você pode saber melhor sobre nossa política de privacidade em ze.experience/privacy',
+        message: 'Sabendo os seus gostos eu poderei te ajudar nas próximas compras, recomendações, atalhos nas conversas comigo. Usarei estes dados a seu favor! 😀 Você pode saber melhor sobre nossa política de privacidade em www.ze.experience/privacy',
         trigger: 'endForm4'
       },
       {
@@ -225,7 +225,7 @@ export default function generateSteps(userData, navigation, setDestaques){
       },
       {
         id:'endForm5',
-        message: 'Por exemplo, se você concordar, posso utilizar a sua localização para identificar quando você está em estabelecimentos parceiros e então facilitar pagamentos e até recomendar descontos.',
+        message: 'Por exemplo, se você concordar, posso utilizar a sua localização para identificar quando você está em estabelecimentos parceiros e então facilitar pagamentos e até recomendar descontos.😍',
         trigger: () => {
           global.endform = true;
           return 'localizaoOption'
@@ -233,7 +233,7 @@ export default function generateSteps(userData, navigation, setDestaques){
       },
       {
         id:'homeForm',
-        message: 'E agora que eu te conheço melhor, ja posso te ajudar, tem algo que eu possa fazer agora?',
+        message: 'Tem algo que eu possa fazer agora?',
         trigger: 'home2',
       },
       {
@@ -260,7 +260,29 @@ export default function generateSteps(userData, navigation, setDestaques){
       {
         id: 'localizaoOption',
         component: <RequestLocButton/>,
-        trigger: 'home2'
+        trigger: 'dadosChat'
+      },
+      {
+        id: 'dadosChat',
+        message: 'Também posso utilizar os dados de nossas conversas para análise de nossos usuários e experiência expecífica voltada a você. Não se preocupe, é tudo enviado se forma anônima.',
+        trigger: 'aceitar'
+      },
+      {
+        id: 'aceitar',
+        options: [
+          {value:'sim',label: 'Aceitar compartilhar dados.', trigger: 'aceitar2'},
+          {value:'não',label: 'Não quero compartilhar dados.', trigger: 'homeForm'}
+        ]
+      },
+      {
+        id: 'aceitar2',
+        message: () => {
+          // const id = uuidv4();
+          // // SecureStore.setItemAsync('userId', id);
+          // global.id = id;
+          return 'Obrigado por me ajudar a te ajudar!'
+        },
+        trigger: 'homeForm'
       },
       {
         id: 'homeFull',
@@ -300,7 +322,7 @@ export default function generateSteps(userData, navigation, setDestaques){
       },
       {
         id:'distribuidores',
-        message: 'Nós estamos sempre atuando em mediadas para termos a maior quantidade de distribuidores. Mas se você conhece algum bar proximo que queira ser parceiro do Zé, pode mandar esse link para ele:\nhhtps://www.ze.com.br',
+        message: 'Nós estamos sempre atuando em medidas para termos a maior quantidade de distribuidores. Mas se você conhece algum bar proximo que queira ser parceiro do Zé, pode mandar esse link para ele:\nhhtps://www.ze.experience/parceria',
         trigger: 'voltaInicio',
         delay: 700
       },
@@ -392,7 +414,7 @@ export default function generateSteps(userData, navigation, setDestaques){
       },
       {
         id: 'tellConection',
-        message: () => 'Opa, eu percebi que você se conectou com ' + global.estabelecimento + ' um de nossos parceiros! Que tal dar uma olhada no cardápio? Você pode realizar o pagamento via app ou pelo QRCode 😎',
+        message: () => 'Opa, eu percebi que você estava no ' + global.estabelecimento + ', um de nossos parceiros! Que tal dar uma olhada no cardápio? Você pode realizar o pagamento via app ou pelo QRCode 😎',
         trigger: 'optionsConection',
       },
       {

@@ -38,7 +38,7 @@ export default class App extends Component  {
           longitude: -35.028713
         },
         {
-          name: 'Shopping Boa Vista',
+          name: 'Restaurante Mustang',
           latitude: -8.059323,
           longitude: -34.887795
         },
@@ -129,14 +129,14 @@ export default class App extends Component  {
         console.log('locations:', receivedNewData)
         global.localON = true;
         this.state.locations.forEach( e => {
-            if(self.arePointsNear(locations[0].coords,e, 0.200)){
+            if(self.arePointsNear(locations[0].coords,e, 0.050)){
               self.sendPushNotification(e);
               global.estabelecimento = e.name;
               if(global.estabelecimento === 'Bar do urso'){
                 global.conectado = 1;
               }
               else{
-                global.conectado = 2;
+                global.conectado = 1;
               }
             }
           } 

@@ -34,7 +34,7 @@ export default class Home extends React.Component {
     this.state = {
       navigation: props.navigation,
       // destaques: props.route.params.destaques
-      destaques: [0,10,4,8,11]
+      destaques: [13,14,15,0,2]
     }
 
     this.setDestaques = this.setDestaques.bind(this)
@@ -78,7 +78,7 @@ export default class Home extends React.Component {
               textShadowRadius: 4.62,
               elevation: 3,
             }}>
-              João Silva
+              João
             </Text>
             
             <View style={{height: 170, width: '100%', marginTop: 20, alignItems: 'center'}}>
@@ -98,7 +98,7 @@ export default class Home extends React.Component {
 
 
             <Text style={{width: '100%', textAlign: 'left', fontSize: 25, marginLeft: 10, fontWeight: 'bold', marginTop: 10}}>
-              Destaques
+              {this.state.destaques[0]==13?'Sugestões':'Destaques para você'}
             </Text>
             <Highlights>
             {arr.map((e) => {return <ProductCard product={products[e]}/>} )}
@@ -107,6 +107,16 @@ export default class Home extends React.Component {
               Eventos
             </Text>
             <Highlights>
+              <EventCard event={{
+                img: fusion,
+                name:'Fusion New Rivals',
+                local:'Acompanhe Online'
+              }}/>
+              <EventCard event={{
+                img: beats,
+                name:'Skol Beats Sense',
+                local:'Olinda - PE'
+              }}/>
               <EventCard event={{
                 img: carvalheira,
                 name:'Carvalheira na Ladeira',
@@ -117,16 +127,6 @@ export default class Home extends React.Component {
                 name:'Só Track Boa',
                 local:'Recife - PE'
               }}/> */}
-              <EventCard event={{
-                img: beats,
-                name:'Skol Beats Sense',
-                local:'Olinda - PE'
-              }}/>
-              <EventCard event={{
-                img: fusion,
-                name:'Fusion New Rivals',
-                local:'Acompanhe Online'
-              }}/>
             </Highlights>
 
         </View>
