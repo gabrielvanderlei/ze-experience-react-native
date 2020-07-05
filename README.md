@@ -98,12 +98,20 @@ npm install
 ```
 ou
 ```bash
+yarn add
+```
+3. Executar expo
+```bash
+expo start
+```
+ou
+```bash
 yarn start
 ```
 
 ### Aplicativo
 Atualmente o aplicativo só é suportado em dispositivos Android.
-[Baixar versão mais recente do apk]()
+[Baixar versão mais recente do apk](https://expo.io/artifacts/0fc8ddea-854d-49c5-986e-5c9f2950ab7e)
 
 <p float="left" align="center">
 <img src="https://i.imgur.com/KxcSwOF.jpg" alt="Tela inicial do app" height="400"/>
