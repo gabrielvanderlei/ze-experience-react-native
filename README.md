@@ -4,7 +4,7 @@
 
 [![GitHub issues](https://img.shields.io/github/issues-raw/gabrielvanderlei/ze-experience-react-native.svg)](https://github.com/gabrielvanderlei/ze-experience-react-native/issues)
 [![GitHub last commit](https://img.shields.io/github/last-commit/gabrielvanderlei/ze-experience-react-native.svg)](https://github.com/gabrielvanderlei/ze-experience-react-native/commits/master)
-[![NPM](https://img.shields.io/npm/l/ze-experience-react-native.svg)](https://choosealicense.com/licenses/mit)
+[![NPM](https://img.shields.io/github/license/gabrielvanderlei/ze-experience-react-native.svg)](https://choosealicense.com/licenses/mit)
 
 <!-- TABLE OF CONTENTS -->
 
