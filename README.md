@@ -27,7 +27,7 @@
 
 ## Sobre o Projeto
 O Zé Experience consiste em um conceito de aplicação desenvolvido utilizando como base o já existente Zé Delivery. O está sendo desenvolvido como solução ao problema proposto pela Ambev no Mega Hack 3.0. 
-O README foi criado utilizando como base o projeto que pode ser acessado clicando [aqui](https://github.com/Rocketseat/react-native-template-rocketseat-advanced/blob/master/README.md)
+O README foi criado utilizando como base o projeto que pode ser acessado clicando [aqui](https://github.com/Rocketseat/react-native-template-rocketseat-advanced/blob/master/README.md) e editado no [stackedit.io](stackedit.io).
 
 ### Visão Geral
 
@@ -116,7 +116,7 @@ yarn start
 
 ### Aplicativo
 Atualmente o aplicativo só é suportado em dispositivos Android.
-[Baixar versão mais recente do apk](https://expo.io/artifacts/0fc8ddea-854d-49c5-986e-5c9f2950ab7e)
+[Baixar versão mais recente do apk](https://exp-shell-app-assets.s3.us-west-1.amazonaws.com/android/%40samuelsimoes31/ze-experience-realease-d359a04c7d3d42829270e768d48db070-signed.apk)
 
 <p float="left" align="center">
 <img src="https://i.imgur.com/KxcSwOF.jpg" alt="Tela inicial do app" height="400"/>
