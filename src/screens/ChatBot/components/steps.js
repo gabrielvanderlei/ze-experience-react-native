@@ -181,9 +181,9 @@ export default function generateSteps(userData, navigation, setDestaques){
         id: 'semAlcool3',
         message: ({previousValue}) => {
          enviarDadosServidor(previousValue);
-         return 'Boa escolha'
+         return 'Boa escolha\nAgora eu conheço melhor os seus gostos'
         },
-        trigger: getLastStep('semAlcool3','endForm3')
+        trigger: getLastStep('semAlcool3','start')
       },
       {
         id: 'cervejas',
@@ -252,7 +252,7 @@ export default function generateSteps(userData, navigation, setDestaques){
         //aqui é pra ter uma div com o produto que o usuário escolheu
         message: ({previousValue}) => {
           enviarDadosServidor(previousValue);
-          return 'Você tem bom gosto.'
+          return 'Você tem bom gosto.\nAgora sei do que cê gosta!'
         },
         trigger: getLastStep('endForm','start')
       },
@@ -293,7 +293,7 @@ export default function generateSteps(userData, navigation, setDestaques){
             global.lastStep = 'home'
             // getPermissionStatus()
             // alert(global.localON?'TRU':'FALSU')
-            if(global.localON){
+            if(true){
               if(global.conectado === 1) return 'tellConection';
               else if(global.conectado === 2 && global.cupom === true) return 'tellConectionShop'
               return 'home2';
